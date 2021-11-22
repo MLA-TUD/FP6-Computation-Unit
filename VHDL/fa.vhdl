@@ -10,7 +10,7 @@ entity fa is -- full adder
 		c_out : out std_logic
 	);
 end fa;
-
+--Hallo
 architecture behavior of fa is
 	component ha
 		port ( -- s: sum; c: carry
