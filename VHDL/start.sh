@@ -39,10 +39,8 @@ else
     echo "Testbench dump failed"
     exit 1
 fi
-
+done
 echo "start gtkwave..."
 gtkwave $unit.vcd  --rcvar 'do_initial_zoom_fit yes' &
 
 trap : 0
-
-done
