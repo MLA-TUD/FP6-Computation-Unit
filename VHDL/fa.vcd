@@ -1,0 +1,143 @@
+$date
+  Mon Nov 22 11:38:07 2021
+$end
+$version
+  GHDL v0
+$end
+$timescale
+  1 fs
+$end
+$var reg 1 ! a $end
+$var reg 1 " b $end
+$var reg 1 # c_in $end
+$var reg 1 $ s $end
+$var reg 1 % c_out $end
+$scope module full_adder $end
+$var reg 1 & a $end
+$var reg 1 ' b $end
+$var reg 1 ( c_in $end
+$var reg 1 ) s $end
+$var reg 1 * c_out $end
+$var reg 1 + s1 $end
+$var reg 1 , c1 $end
+$var reg 1 - c2 $end
+$scope module halbaddierer1 $end
+$var reg 1 . a $end
+$var reg 1 / b $end
+$var reg 1 0 s $end
+$var reg 1 1 c $end
+$upscope $end
+$scope module halbaddierer2 $end
+$var reg 1 2 a $end
+$var reg 1 3 b $end
+$var reg 1 4 s $end
+$var reg 1 5 c $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+0!
+0"
+0#
+0$
+0%
+0&
+0'
+0(
+0)
+0*
+0+
+0,
+0-
+0.
+0/
+00
+01
+02
+03
+04
+05
+#1000000
+1#
+1$
+1(
+1)
+12
+14
+#2000000
+1"
+0#
+1$
+1'
+0(
+1)
+1+
+1/
+10
+02
+13
+14
+#3000000
+1#
+0$
+1%
+1(
+0)
+1*
+1-
+12
+04
+15
+#4000000
+1!
+0"
+0#
+1$
+0%
+1&
+0'
+0(
+1)
+0*
+0-
+1.
+0/
+02
+14
+05
+#5000000
+1#
+0$
+1%
+1(
+0)
+1*
+1-
+12
+04
+15
+#6000000
+1"
+0#
+0$
+1'
+0(
+0)
+0+
+1,
+0-
+1/
+00
+11
+02
+03
+04
+05
+#7000000
+1#
+1$
+1(
+1)
+12
+14
+#8000000

@@ -33,7 +33,7 @@ else
     echo "Build failed"
     exit 1
 fi
-if ghdl -r $unit --vcd=testbench.vcd ; then
+if ghdl -r $unit --vcd=$unit.vcd ; then
     echo "Testbench dump ok"
 else
     echo "Testbench dump failed"
@@ -41,7 +41,7 @@ else
 fi
 
 echo "start gtkwave..."
-gtkwave testbench.vcd  --rcvar 'do_initial_zoom_fit yes' &
+gtkwave $unit.vcd  --rcvar 'do_initial_zoom_fit yes' &
 
 trap : 0
 
