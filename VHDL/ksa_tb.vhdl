@@ -20,10 +20,10 @@ begin
 	process begin
 		a <= "00000001";
 		b <= "00000010";
-		wait for 10ns;
+		wait for 10 ns;
 		a <= "00000001";
 		b <= "00000001";
-		wait for 10ns;
+		wait for 10 ns;
 		wait;
 	end process;
 end test;

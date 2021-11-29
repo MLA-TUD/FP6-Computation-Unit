@@ -1,0 +1,51 @@
+$date
+  Mon Nov 29 13:15:39 2021
+$end
+$version
+  GHDL v0
+$end
+$timescale
+  1 fs
+$end
+$var reg 8 ! a[7:0] $end
+$var reg 8 " b[7:0] $end
+$var reg 8 # s[7:0] $end
+$scope module kogge_stone_adder $end
+$var reg 8 $ a[7:0] $end
+$var reg 8 % b[7:0] $end
+$var reg 8 & s[7:0] $end
+$var reg 8 ' propagate_0[7:0] $end
+$var reg 8 ( propagate_1[7:0] $end
+$var reg 8 ) propagate_2[7:0] $end
+$var reg 8 * propagate_3[7:0] $end
+$var reg 8 + propagate_4[7:0] $end
+$var reg 8 , generate_0[7:0] $end
+$var reg 8 - generate_1[7:0] $end
+$var reg 8 . generate_2[7:0] $end
+$var reg 8 / generate_3[7:0] $end
+$var reg 8 0 generate_4[7:0] $end
+$var reg 8 1 carries[7:0] $end
+$upscope $end
+$enddefinitions $end
+#0
+b00000001 !
+b00000010 "
+b00000000 #
+b00000001 $
+b00000010 %
+b00000000 &
+b00000000 '
+b00000000 (
+b00000000 )
+b00000000 *
+b00000000 +
+b00000000 ,
+b00000000 -
+b00000000 .
+b00000000 /
+b00000000 0
+b00000000 1
+#10000000
+b00000001 "
+b00000001 %
+#20000000
