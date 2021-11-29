@@ -13,7 +13,7 @@ architecture test of ksa_tb is
 		);
 	end component ksa;
 	
-	signal a, b, s : std_logic_vector(7 downto 0) := "00000000";
+	signal a, b, s : std_logic_vector(7 downto 0);
 begin
 	kogge_stone_adder: ksa port map(a, b, s);
 	
