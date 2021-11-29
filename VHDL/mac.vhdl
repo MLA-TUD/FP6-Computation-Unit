@@ -6,8 +6,8 @@ entity mac is -- multiply-accumulate unit
 		a : in std_logic_vector(7 downto 0);
 		b : in std_logic_vector(7 downto 0);
 		c : in std_logic;
-		r : in std_logic
-		-- ?
+		r : in std_logic;
+		d : out std_logic_vector(15 downto 0)
 	);
 end mac;
 
