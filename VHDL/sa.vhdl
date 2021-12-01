@@ -6,11 +6,11 @@ entity sa is -- systolic array
 		matrix_size : positive := 8
 	);
 	port ( -- c: clock; r: reset
-		a : in array(matrix_size * matrix_size) of std_logic_vector(7 downto 0);
-		b : in array(matrix_size * matrix_size) of std_logic_vector(7 downto 0);
+		a : in array(matrix_size, matrix_size) of std_logic_vector(7 downto 0);
+		b : in array(matrix_size, matrix_size) of std_logic_vector(7 downto 0);
 		c : in std_logic;
 		r : in std_logic;
-		d : out array(matrix_size) of std_logic_vector(15 downto 0)
+		d : out array(matrix_size, matrix_size) of std_logic_vector(7 downto 0)
 	);
 end sa;
 
