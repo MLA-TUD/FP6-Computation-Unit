@@ -24,6 +24,7 @@ begin
 		a <= "00000001";
 		b <= "00000001";
 		wait for 10 ns; -- s = "00000010"
+		-- ?
 		wait;
 	end process;
 end test;

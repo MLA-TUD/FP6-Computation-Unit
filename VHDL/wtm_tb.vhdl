@@ -19,6 +19,15 @@ begin
 	wallace_tree_multiplier: wtm port map(a, b, p);
 	
 	process begin
+		a <= "00000001";
+		b <= "00000010";
+		wait for 10 ns; -- p = "0000000000000000"
+		a <= "00000001";
+		b <= "00000001";
+		wait for 10 ns; -- p = "0000000000000001"
+		a <= "10000000";
+		b <= "10000000";
+		wait for 10 ns; -- p = "1000000000000000"
 		-- ?
 		wait;
 	end process;
