@@ -21,14 +21,12 @@ begin
 	process begin
 	
 		for i in 0 to 255 loop
-	
-		a <= std_logic_vector(to_unsigned(i, 8));
+			a <= std_logic_vector(to_unsigned(i, 8));
 			
 			for j in 0 to 255 loop
-			b <=std_logic_vector(to_unsigned(j, 8));
+				b <=std_logic_vector(to_unsigned(j, 8));
 			
-			wait for 20 ns;
-			
+				wait for 20 ns;
 			
 			end loop;
 		

@@ -1,7 +1,7 @@
 library ieee;
 use ieee.std_logic_1164.all;
 
-entity ksa is -- kogge-stone adder
+entity ksa is -- kogge-stone adder (twos complement)
 	port ( -- s: sum
 		a : in std_logic_vector(7 downto 0);
 		b : in std_logic_vector(7 downto 0);
@@ -13,6 +13,7 @@ architecture behavior of ksa is
 	signal propagate_0, propagate_1, propagate_2, propagate_3, propagate_4 : std_logic_vector(7 downto 0);
 	signal generate_0, generate_1, generate_2, generate_3, generate_4 : std_logic_vector(7 downto 0);
 	signal carries : std_logic_vector(7 downto 0);
+	signal ksa_s : std_logic_vector(7 downto 0);
 	
 begin
 	-- row_0:
@@ -62,7 +63,13 @@ begin
 	
 	-- Sum:
 	sum: for i in 7 downto 1 generate
-		s(i) <= propagate_0(i) xor carries(i - 1);
+		ksa_s(i) <= propagate_0(i) xor carries(i - 1);
 	end generate sum;
-	s(0) <= propagate_0(0); -- carries(-1) = 0, da wir keinen carry-input haben
+	ksa_s(0) <= propagate_0(0);
+	
+	-- Overflow Check:
+	s <=
+		ksa_s 		when carries(7) = carries(6) 	else  	-- no overflow
+		"01111111" 	when a(7) = '0' and b(7) = '0' 	else  	-- positive overflow; 	s <= max positive (127)
+		"10000000" 	when a(7) = '1' and b(7) = '1';  		-- negative overflow; 	s <= max negative (-128)
 end behavior;
