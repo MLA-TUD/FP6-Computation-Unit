@@ -1,5 +1,6 @@
 library ieee;
 use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
 
 entity ksa_tb is -- kogge-stone adder testbench
 end ksa_tb;
@@ -18,13 +19,21 @@ begin
 	kogge_stone_adder: ksa port map(a, b, s);
 	
 	process begin
-		a <= "00000001";
-		b <= "00000010";
-		wait for 10 ns; -- s = "00000011"
-		a <= "00000001";
-		b <= "00000001";
-		wait for 10 ns; -- s = "00000010"
-		-- ?
+	
+		for i in 0 to 255 loop
+	
+		a <= std_logic_vector(to_unsigned(i, 8));
+			
+			for j in 0 to 255 loop
+			b <=std_logic_vector(to_unsigned(j, 8));
+			
+			wait for 20 ns;
+			
+			
+			end loop;
+		
+		end loop;
+		
 		wait;
 	end process;
 end test;
