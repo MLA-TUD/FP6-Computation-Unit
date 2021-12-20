@@ -62,7 +62,7 @@ begin
 	
 	-- Sum:
 	sum: for i in 7 downto 1 generate
-		s(i) <= propagate_4(i) xor carries(i - 1);
+		s(i) <= propagate_0(i) xor carries(i - 1);
 	end generate sum;
-	s(0) <= propagate_4(0); -- carries(-1) = 0, da wir keinen carry-input haben
+	s(0) <= propagate_0(0); -- carries(-1) = 0, da wir keinen carry-input haben
 end behavior;
