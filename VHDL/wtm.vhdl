@@ -37,7 +37,7 @@ architecture behavior of wtm is
 		);
 	end component ksa;
 	
-	-- test?
+	-- test2
 begin
-	-- ?
+	-- 
 end behavior;
