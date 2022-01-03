@@ -1,5 +1,6 @@
 library ieee;
 use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
 
 entity wtm_tb is -- wallace-tree multiplier testbench
 end wtm_tb;
