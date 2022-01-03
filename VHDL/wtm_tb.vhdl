@@ -13,22 +13,25 @@ architecture test of wtm_tb is
 		);
 	end component wtm;
 	
-	signal a, b : std_logic_vector(7 downto 0) := "00000000";
-	signal p : std_logic_vector(15 downto 0) := "0000000000000000";
+	signal a, b : std_logic_vector(7 downto 0);
+	signal p : std_logic_vector(15 downto 0);
 begin
 	wallace_tree_multiplier: wtm port map(a, b, p);
 	
 	process begin
-		a <= "00000001";
-		b <= "00000010";
-		wait for 10 ns; -- p = "0000000000000010"
-		a <= "00000001";
-		b <= "00000001";
-		wait for 10 ns; -- p = "1000000000000000"
-		a <= "01000000";
-		b <= "01000000";
-		wait for 10 ns; -- p = "0001000000000000" ?
-		-- ?
+	
+		for i in 0 to 255 loop
+			a <= std_logic_vector(to_unsigned(i, 8));
+			
+			for j in 0 to 255 loop
+				b <=std_logic_vector(to_unsigned(j, 8));
+			
+				wait for 20 ns;
+			
+			end loop;
+		
+		end loop;
+		
 		wait;
 	end process;
 end test;
