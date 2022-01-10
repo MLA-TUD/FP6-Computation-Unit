@@ -10,12 +10,12 @@ architecture test of wtm_tb is
 		port ( -- p: product
 			a : in std_logic_vector(7 downto 0);
 			b : in std_logic_vector(7 downto 0);
-			p : out std_logic_vector(15 downto 0)
+			p : out std_logic_vector(7 downto 0)
 		);
 	end component wtm;
 	
 	signal a, b : std_logic_vector(7 downto 0);
-	signal p : std_logic_vector(15 downto 0);
+	signal p : std_logic_vector(7 downto 0);
 begin
 	wallace_tree_multiplier: wtm port map(a, b, p);
 	

@@ -1,11 +1,11 @@
 library ieee;
 use ieee.std_logic_1164.all;
 
-entity wtm is -- wallace-tree multiplier
+entity wtm is -- wallace-tree multiplier (twos complement, 8-Bit product)
 	port ( -- p: product
 		a : in std_logic_vector(7 downto 0);
 		b : in std_logic_vector(7 downto 0);
-		p : out std_logic_vector(15 downto 0)
+		p : out std_logic_vector(7 downto 0)
 	);
 end wtm;
 
@@ -28,167 +28,244 @@ architecture behavior of wtm is
 			c_out : out std_logic
 		);
 	end component fa;
-	-- 2D-Array?
-	signal s00,s01,s02,s03,s04,s05,s06,s07,s10,s11,s12,s13,s14,s15,s16,s17,s20,s21,s22,s23,s24,s25,s26,s27,s30,s31,s32,s33,s34,s35,s36,s37,s40,s41,s42,s43,s44,s45,s46,s47,s50,s51,s52,s53,s54,s55,s56,s57,s60,s61,s62,s63,s64,s65,s66,s67,s70,s71,s72,s73,s74,s75,s76,s77:std_logic;
-    signal k01,k02,k03,k04,k05,k06,k07,k08,k09,k10,k11,k12,k13,k14,k15,k16,k17,k18,k19,k20,k21,k22,k23,k24,k25,k26,k27,k28,k29,k30,k31,k32,k33,k34,k35,k36,k37,k38,k39,k40,k41,k42,k43,k44,k45,k46,k47,k48,k49,k50,k51,k52,k53,k54,k55,k56,k57,k58,k59,k60,k61,k62,k63,k64,k65,k66,k67,k68:std_logic;
-    signal c01,c02,c03,c04,c05,c06,c07,c08,c09,c10,c11,c12,c13,c14,c15,c16,c17,c18,c19,c20,c21,c22,c23,c24,c25,c26,c27,c28,c29,c30,c31,c32,c33,c34,c35,c36,c37,c38,c39,c40,c41,c42,c43,c44,c45,c46,c47,c48,c49,c50,c51,c52,c53,c54,c55,c56,c57,c58,c59,c60,c61,c62,c63,c64,c65,c66,c67,c68:std_logic;
-
+	
+	component ksa is -- kogge-stone adder (twos complement)
+		port ( -- s: sum
+			a : in std_logic_vector(7 downto 0);
+			b : in std_logic_vector(7 downto 0);
+			s : out std_logic_vector(7 downto 0)
+		);
+	end component ksa;
+	
+	component ksa_oo is -- kogge-stone adder (twos complement)
+		port ( -- s: sum
+			a : in std_logic_vector(7 downto 0);
+			b : in std_logic_vector(7 downto 0);
+			s : out std_logic_vector(7 downto 0)
+		);
+	end component ksa_oo;
+	
+	-- u: unsigned
+	signal ksa_a, ksa_b, a_x, b_x, a_u, b_u, a_s, b_s, ksa_sk, ksa_sx, p_ksa, ksa_s : std_logic_vector(7 downto 0);
+	signal p_s : std_logic;
+	
+	-- s: sum; c: carry
+	signal s00, s01, s02, s03, s04, s05, s06, s07, s12, s13, s31 : std_logic_vector(7 downto 0);
+	signal s10, s11, s21 : std_logic_vector(9 downto 0);
+	signal s20 : std_logic_vector(12 downto 0);
+	signal s30, s40 : std_logic_vector(14 downto 0);
+	signal c10, c11, c20, c21 : std_logic_vector(7 downto 0);
+	signal c30 : std_logic_vector(9 downto 0);
+	signal c40 : std_logic_vector(10 downto 0);
+	
 begin
-    -- Loop over s
-    s00 <= a(0) and b(0);
-    s10 <= a(1) and b(0);
-    s20 <= a(2) and b(0);
-    s30 <= a(3) and b(0);
-    s40 <= a(4) and b(0);
-    s50 <= a(5) and b(0);
-    s60 <= a(6) and b(0);
-    s70 <= a(7) and b(0);
-    s01 <= a(0) and b(1);
-    s11 <= a(1) and b(1);
-    s21 <= a(2) and b(1);
-    s31 <= a(3) and b(1);
-    s41 <= a(4) and b(1);
-    s51 <= a(5) and b(1);
-    s61 <= a(6) and b(1);
-    s71 <= a(7) and b(1);
-    s02 <= a(0) and b(2);
-    s12 <= a(1) and b(2);
-    s22 <= a(2) and b(2);
-    s32 <= a(3) and b(2);
-    s42 <= a(4) and b(2);
-    s52 <= a(5) and b(2);
-    s62 <= a(6) and b(2);
-    s72 <= a(7) and b(2);
-    s03 <= a(0) and b(3);
-    s13 <= a(1) and b(3);
-    s23 <= a(2) and b(3);
-    s33 <= a(3) and b(3);
-    s43 <= a(4) and b(3);
-    s53 <= a(5) and b(3);
-    s63 <= a(6) and b(3);
-    s73 <= a(7) and b(3);
-    s04 <= a(0) and b(4);
-    s14 <= a(1) and b(4);
-    s24 <= a(2) and b(4);
-    s34 <= a(3) and b(4);
-    s44 <= a(4) and b(4);
-    s54 <= a(5) and b(4);
-    s64 <= a(6) and b(4);
-    s74 <= a(7) and b(4);
-    s05 <= a(0) and b(5);
-    s15 <= a(1) and b(5);
-    s25 <= a(2) and b(5);
-    s35 <= a(3) and b(5);
-    s45 <= a(4) and b(5);
-    s55 <= a(5) and b(5);
-    s65 <= a(6) and b(5);
-    s75 <= a(7) and b(5);
-    s06 <= a(0) and b(6);
-    s16 <= a(1) and b(6);
-    s26 <= a(2) and b(6);
-    s36 <= a(3) and b(6);
-    s46 <= a(4) and b(6);
-    s56 <= a(5) and b(6);
-    s66 <= a(6) and b(6);
-    s76 <= a(7) and b(6);
-    s07 <= a(0) and b(7);
-    s17 <= a(1) and b(7);
-    s27 <= a(2) and b(7);
-    s37 <= a(3) and b(7);
-    s47 <= a(4) and b(7);
-    s57 <= a(5) and b(7);
-    s67 <= a(6) and b(7);
-    s77 <= a(7) and b(7);
+	-- unsigned values
+	ksa1: ksa_oo port map(a, "11111111", ksa_a);
+	a_x <= ksa_a xor"11111111";
+	a_u <=
+		'0' & a(6 downto 0) when a(7) = '0' else
+		a_x;
+	
+	ksa2: ksa_oo port map(b, "11111111", ksa_b);
+	b_x <= ksa_b xor"11111111";
+	b_u <=
+		'0' & b(6 downto 0) when b(7) = '0' else
+		b_x;
+	
+    -- Stage 1:    (Multiplication  ->  Additions)
+	row_0: for i in 0 to 7 generate
+		s00(i) <= a_u(i) and b_u(0);
+		s01(i) <= a_u(i) and b_u(1);
+		s02(i) <= a_u(i) and b_u(2);
+		s03(i) <= a_u(i) and b_u(3);
+		s04(i) <= a_u(i) and b_u(4);
+		s05(i) <= a_u(i) and b_u(5);
+		s06(i) <= a_u(i) and b_u(6);
+		s07(i) <= a_u(i) and b_u(7);
+	end generate row_0;
+	
+	-- Stage 2.?    (8 rows  ->  2 rows)
+	-- 1:
+	s10(0) <= s00(0);
+    ha00: ha port map(s00(1), s01(0), s10(1), c10(0));
+    fa00: fa port map(s00(2), s01(1), s02(0), s10(2), c10(1));
+    fa01: fa port map(s00(3), s01(2), s02(1), s10(3), c10(2));
+    fa02: fa port map(s00(4), s01(3), s02(2), s10(4), c10(3));
+    fa03: fa port map(s00(5), s01(4), s02(3), s10(5), c10(4));
+    fa04: fa port map(s00(6), s01(5), s02(4), s10(6), c10(5));
+    fa05: fa port map(s00(7), s01(6), s02(5), s10(7), c10(6));
+    ha01: ha port map(s01(7), s02(6), s10(8), c10(7));
+	s10(9) <= s02(7);
+	
+	s11(0) <= s03(0);
+    ha02: ha port map(s03(1), s04(0), s11(1), c11(0));
+    fa06: fa port map(s03(2), s04(1), s05(0), s11(2), c11(1));
+    fa07: fa port map(s03(3), s04(2), s05(1), s11(3), c11(2));
+    fa08: fa port map(s03(4), s04(3), s05(2), s11(4), c11(3));
+    fa09: fa port map(s03(5), s04(4), s05(3), s11(5), c11(4));
+    fa10: fa port map(s03(6), s04(5), s05(4), s11(6), c11(5));
+    fa11: fa port map(s03(7), s04(6), s05(5), s11(7), c11(6));
+    ha03: ha port map(s04(7), s05(6), s11(8), c11(7));
+	s11(9) <= s05(7);
+	
+	s12 <= s06;
+	
+	s13 <= s07;
+	
+	-- 2:
+	s20(0) <= s10(0);
+	s20(1) <= s10(1);
+	ha04: ha port map(s10(2), c10(0), s20(2), c20(0));
+	fa12: fa port map(s10(3), c10(1), s11(0), s20(3), c20(1));
+	fa13: fa port map(s10(4), c10(2), s11(1), s20(4), c20(2));
+	fa14: fa port map(s10(5), c10(3), s11(2), s20(5), c20(3));
+	fa15: fa port map(s10(6), c10(4), s11(3), s20(6), c20(4));
+	fa16: fa port map(s10(7), c10(5), s11(4), s20(7), c20(5));
+	fa17: fa port map(s10(8), c10(6), s11(5), s20(8), c20(6));
+	fa18: fa port map(s10(9), c10(7), s11(6), s20(9), c20(7));
+	s20(10) <= s11(7);
+	s20(11) <= s11(8);
+	s20(12) <= s11(9);
+	
+	s21(0) <= c11(0);
+	ha05: ha port map(c11(1), s12(0), s21(1), c21(0));
+	fa19: fa port map(c11(2), s12(1), s13(0), s21(2), c21(1));
+	fa20: fa port map(c11(3), s12(2), s13(1), s21(3), c21(2));
+	fa21: fa port map(c11(4), s12(3), s13(2), s21(4), c21(3));
+	fa22: fa port map(c11(5), s12(4), s13(3), s21(5), c21(4));
+	fa23: fa port map(c11(6), s12(5), s13(4), s21(6), c21(5));
+	fa24: fa port map(c11(7), s12(6), s13(5), s21(7), c21(6));
+	ha06: ha port map(s12(7), s13(6), s21(8), c21(7));
+	s21(9) <= s13(7);
+	
+	-- 3:
+	s30(0) <= s20(0);
+	s30(1) <= s20(1);
+	s30(2) <= s20(2);
+	ha07: ha port map(s20(3), c20(0), s30(3), c30(0));
+	ha08: ha port map(s20(4), c20(1), s30(4), c30(1));
+	fa25: fa port map(s20(5), c20(2), s21(0), s30(5), c30(2));
+	fa26: fa port map(s20(6), c20(3), s21(1), s30(6), c30(3));
+	fa27: fa port map(s20(7), c20(4), s21(2), s30(7), c30(4));
+	fa28: fa port map(s20(8), c20(5), s21(3), s30(8), c30(5));
+	fa29: fa port map(s20(9), c20(6), s21(4), s30(9), c30(6));
+	fa30: fa port map(s20(10), c20(7), s21(5), s30(10), c30(7));
+	ha09: ha port map(s20(11), s21(6), s30(11), c30(8));
+	ha10: ha port map(s20(12), s21(7), s30(12), c30(9));
+	s30(13) <= s21(8);
+	s30(14) <= s21(9);
+	
+	s31 <= c21;
+	
+	-- 4:
+	s40(0) <= s30(0);
+	s40(1) <= s30(1);
+	s40(2) <= s30(2);
+	s40(3) <= s30(3);
+	ha11: ha port map(s30(4), c30(0), s40(4), c40(0));
+	ha12: ha port map(s30(5), c30(1), s40(5), c40(1));
+	ha13: ha port map(s30(6), c30(2), s40(6), c40(2));
+	fa31: fa port map(s30(7), c30(3), s31(0), s40(7), c40(3));
+	fa32: fa port map(s30(8), c30(4), s31(1), s40(8), c40(4));
+	fa33: fa port map(s30(9), c30(5), s31(2), s40(9), c40(5));
+	fa34: fa port map(s30(10), c30(6), s31(3), s40(10), c40(6));
+	fa35: fa port map(s30(11), c30(7), s31(4), s40(11), c40(7));
+	fa36: fa port map(s30(12), c30(8), s31(5), s40(12), c40(8));
+	fa37: fa port map(s30(13), c30(9), s31(6), s40(13), c40(9));
+	ha14: ha port map(s30(14), s31(7), s40(14), c40(10));
+    
+    -- Stage 3:   (ksa: 8-Bit)
+	a_s <= '0' & s40(6 downto 0);
+	b_s <= '0' & c40(1 downto 0) & "00000";
+	ksa0: ksa port map(a_s, b_s, ksa_s);
+	
+	-- Sign:
+	p_s <=
+		a(7) xor b(7) when (a_u /= "00000000") and (b_u /= "00000000") else	-- 0 can only be represented as a positive value
+		'0';
+	p(7) <= p_s;
+	
+	ksa_sk <= ksa_s xor "11111111";
+	ksa3: ksa port map(ksa_sk, "00000001", ksa_sx);
+	p_ksa <=
+		ksa_s when p_s = '0' else
+		ksa_sx;
+	
+	-- Overflow Check:
+	p(6 downto 0) <=
+		p_ksa(6 downto 0) 	when '0' = (s40(14) or s40(13) or s40(12) or s40(11) or s40(10) or s40(9) or s40(8) or s40(7) or c40(10) or c40(9) or c40(8) or c40(7) or c40(6) or c40(5) or c40(4) or c40(3) or c40(2)) 	else	-- no overflow
+		"1111111" 			when p_s = '0' 																																												else	-- positive overflow; 	p <= max positive (127)
+		"0000000" 			when p_s = '1';																																														-- negative overflow; 	p <= max negative (-128)
+end behavior;
 
-    ha00: ha port map(s01,s10,k01,c01);
-    fa00: fa port map(s20,s02,s11,k02,c02);
-    fa01: fa port map(s30,s21,s12,k03,c03);
-    fa02: fa port map(s40,s31,s22,k04,c04);
-    ha01: fa port map(s13,s04,k05,c05);
-    fa03: fa port map(s50,s41,s32,k06,c06);
-    fa04: fa port map(s23,s14,s05,k07,c07);
-    fa05: fa port map(s60,s51,s42,k08,c08);
-    fa06: fa port map(s33,s24,s15,k09,c09);
-    fa07: fa port map(s70,s61,s52,k10,c10);
-    fa08: fa port map(s43,s34,s25,k11,c11);
-    ha02: ha port map(s16,s07,k12,c12);
-    fa09: fa port map(s71,s62,s53,k13,c13);
-    fa90: fa port map(s44,s35,s26,k14,c14);
-    fa31: fa port map(s72,s63,s54,k15,c15);
-    fa32: fa port map(s45,s36,s27,k16,c16);
-    fa33: fa port map(s73,s64,s55,k17,c17);
-    ha03: fa port map(s46,s37,k18,c18);
-    fa34: fa port map(s74,s65,s56,k19,c19);
-    fa35: fa port map(s75,s66,s57,k20,c20);
-    ha04: ha port map(s76,s67,k21,c21);
+library ieee;
+use ieee.std_logic_1164.all;
 
-    ha10: ha port map(k02,c01,k22,c22);
-    fa10: fa port map(s03,c02,k03,k23,c23);
-    fa11: fa port map(k04,k05,c03,k24,c24);
-    fa12: fa port map(k06,k07,c04,k25,c25);
-    fa13: fa port map(k08,k09,s06,k26,c26);
-    ha11: ha port map(c06,c07,k27,c27);
-    fa14: fa port map(k10,k11,k12,k28,c28);
-    ha12: ha port map(c08,c09,k29,c29);
-    fa15: fa port map(k13,k14,s17,k30,c30);
-    fa16: fa port map(c10,c11,c12,k31,c31);
-    fa17: fa port map(k15,k16,c13,k32,c32);
-    fa18: fa port map(k17,k18,c15,k33,c33);
-    fa19: fa port map(k19,c17,c18,k34,c34);
-    ha13: ha port map(k20,c19,k35,c35);
-    ha14: ha port map(k21,c20,k36,c36);
-    
-    ha40: ha port map(k23,c22,k37,c37);
-    ha41: ha port map(c23,k24,k38,c38);
-    fa40: fa port map(c24,k25,c05,k39,c39);
-    fa41: fa port map(c25,k26,k27,k40,c40);
-    fa42: fa port map(c26,c27,k28,k41,c41);
-    fa43: fa port map(c28,c29,k30,k42,c42);
-    fa44: fa port map(c30,c31,k32,k43,c43);
-    fa45: fa port map(c32,c16,k33,k44,c44);
-    fa46: fa port map(c33,s47,k34,k45,c45);
-    ha42: ha port map(k35,c34,k46,c46);
-    ha43: ha port map(c35,k36,k47,c47);
-    fa47: fa port map(s77,c21,c36,k48,c48);
-    
-    ha50: ha port map(c37,k38,k49,c49);
-    fa50: fa port map(k39,c38,c49,k50,c50);
-    fa51: fa port map(k40,c39,c50,k51,c51);
-    fa52: fa port map(c40,k41,k29,k52,c52);
-    fa53: fa port map(c41,k31,k42,k53,c53);
-    fa54: fa port map(c14,c42,k43,k54,c54);
-    fa55: fa port map(k44,c43,c54,k55,c55);
-    fa56: fa port map(c44,k45,c55,k56,c56);
-    fa57: fa port map(k46,c45,c56,k57,c57);
-    fa58: fa port map(c46,k47,c57,k58,c58);
-    fa59: fa port map(k48,c47,c58,k59,c59);
-    
-    ha70: ha port map(c51,k52,k60,c60);
-    fa70: fa port map(c52,k53,c60,k61,c61);
-    fa71: fa port map(c53,k54,c61,k62,c62);
-    ha71: ha port map(k55,c62,k63,c63);
-    ha72: ha port map(k56,c63,k64,c64);
-    ha73: ha port map(k57,c64,k65,c65);
-    ha74: ha port map(k58,c65,k66,c66);
-    ha75: ha port map(k59,c66,k67,c67);
-    fa81: fa port map(c48,c59,c67,k68,c68);
-    
-    
-    p(0) <= s00;
-    p(1) <= k01;
-    p(2) <= k22;
-    p(3) <= k37;
-    p(4) <= k49;
-    p(5) <= k50;
-    p(6) <= k51;
-    p(7) <= k60;
-    p(8) <= k61;
-    p(9) <= k62;
-    p(10) <= k63;
-    p(11) <= k64;
-    p(12) <= k65;
-    p(13) <= k66;
-    p(14) <= k67;
-    p(15) <= k68 or c68;
-    
+entity ksa_oo is -- kogge-stone adder (without overflow-detection)
+	port ( -- s: sum
+		a : in std_logic_vector(7 downto 0);
+		b : in std_logic_vector(7 downto 0);
+		s : out std_logic_vector(7 downto 0)
+	);
+end ksa_oo;
+
+architecture behavior of ksa_oo is
+	signal propagate_0, propagate_1, propagate_2, propagate_3, propagate_4 : std_logic_vector(7 downto 0);
+	signal generate_0, generate_1, generate_2, generate_3, generate_4 : std_logic_vector(7 downto 0);
+	signal carries : std_logic_vector(7 downto 0);
+	signal ksa_s : std_logic_vector(7 downto 0);
+	
+begin
+	-- row_0:
+	row_0: for i in 7 downto 0 generate
+		propagate_0(i) <= a(i) xor b(i);
+		generate_0(i) <= a(i) and b(i);
+	end generate row_0;
+	
+	-- row_1
+	row_1: for i in 7 downto 1 generate
+		propagate_1(i) <= propagate_0(i) and propagate_0(i - 1);
+		generate_1(i) <= (propagate_0(i) and generate_0(i - 1)) or generate_0(i);
+	end generate row_1;
+	propagate_1(0) <= propagate_0(0);
+	generate_1(0) <= generate_0(0);
+	
+	-- row_2:
+	row_2_1: for i in 7 downto 2 generate
+		propagate_2(i) <= propagate_1(i) and propagate_1(i - 2);
+		generate_2(i) <= (propagate_1(i) and generate_1(i - 2)) or generate_1(i);
+	end generate row_2_1;
+	row_2_2: for i in 1 downto 0 generate
+		propagate_2(i) <= propagate_1(i);
+		generate_2(i) <= generate_1(i);
+	end generate row_2_2;
+	
+	-- row_3:
+	row_3_1: for i in 7 downto 4 generate
+		propagate_3(i) <= propagate_2(i) and propagate_2(i - 4);
+		generate_3(i) <= (propagate_2(i) and generate_2(i - 4)) or generate_2(i);
+	end generate row_3_1;
+	row_3_2: for i in 3 downto 0 generate
+		propagate_3(i) <= propagate_2(i);
+		generate_3(i) <= generate_2(i);
+	end generate row_3_2;
+	
+	-- row_4:
+	propagate_4(7) <= propagate_3(7) and propagate_3(0);
+	generate_4(7) <= (propagate_3(7) and generate_3(0)) or generate_3(7);
+	row_4_2: for i in 6 downto 0 generate
+		propagate_4(i) <= propagate_3(i);
+		generate_4(i) <= generate_3(i);
+	end generate row_4_2;
+	
+	-- Carries:
+	carries <= generate_4;
+	
+	-- Sum:
+	sum: for i in 7 downto 1 generate
+		ksa_s(i) <= propagate_0(i) xor carries(i - 1);
+	end generate sum;
+	ksa_s(0) <= propagate_0(0);
+	
+	s <= ksa_s;
 end behavior;
