@@ -7,7 +7,7 @@ entity mac is -- multiply-accumulate unit
 		b : in std_logic_vector(7 downto 0);
 		c : in std_logic;
 		r : in std_logic;
-		d : out std_logic_vector(15 downto 0)
+		d : out std_logic_vector(7 downto 0)
 	);
 end mac;
 
@@ -24,20 +24,28 @@ architecture behavior of mac is
 		port ( -- p: product
 			a : in std_logic_vector(7 downto 0);
 			b : in std_logic_vector(7 downto 0);
-			p : out std_logic_vector(15 downto 0)
+			p : out std_logic_vector(7 downto 0)
 		);
 	end component wtm;
 	
-	component fifo is -- first-in first-out (parallel-in parallel-out)
-		port ( -- c: clock
+	component pipo is -- parallel-in parallel-out (8-Bit Register)
+		port ( -- c: clock; r: reset
 			a : in std_logic_vector(7 downto 0);
 			c : in std_logic;
 			r : in std_logic;
 			b : out std_logic_vector(7 downto 0)
 		);
-	end component fifo;
+	end component pipo;
 	
-	-- ?
+	-- p: product; m: memory; s: sum
+	signal p, m : std_logic_vector(7 downto 0);
+
 begin
-	-- ?
+	wallace_tree_multiplier: wtm port map(a, b, p);
+	
+	kogge_stone_adder: ksa port map(m, p, s);
+	
+	register_8bit: pipo port map(s, c, r, m);
+	
+	d <= m;
 end behavior;
