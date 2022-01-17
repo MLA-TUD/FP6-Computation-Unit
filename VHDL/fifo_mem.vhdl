@@ -1,6 +1,7 @@
 library IEEE;
 use IEEE.std_logic_1164.all;
-use IEEE.std_numeric_std.all;
+use IEEE.numeric_std.all;
+
 
 entity fifo_mem is generic(dataSize:integer:=8;addressSize:integer:=8);
     port(
@@ -10,7 +11,7 @@ entity fifo_mem is generic(dataSize:integer:=8;addressSize:integer:=8);
         wAddress: in std_logic_vector(addressSize-1 downto 0);
         wClkEn: in std_logic;
         wFull: in std_logic;
-        wClk: in std_logic;
+        wClk: in std_logic
     );
 end entity fifo_mem;
 architecture fifo_mem_behaviour of fifo_mem is
@@ -19,7 +20,7 @@ architecture fifo_mem_behaviour of fifo_mem is
     signal ram:MEMORY;
     
     begin
-        process(wClk,rData)
+        process(wClk,wData,rAddress)
         variable ram_waddress:natural range 0 to 2**addressSize-1;
         variable ram_raddress:natural range 0 to 2**addressSize-1;
         begin
@@ -28,7 +29,7 @@ architecture fifo_mem_behaviour of fifo_mem is
             rData <= ram(ram_raddress);
 
             if rising_edge(wClk) then
-                if (wClkEn && !wFull) then
+                if (wClkEn='1' and wFull='0') then
                     ram(ram_waddress) <= wData;
                 end if;
 
