@@ -11,62 +11,68 @@ $scope module standard $end
 $upscope $end
 $scope module std_logic_1164 $end
 $upscope $end
-$scope module wtm $end
+$scope module numeric_std $end
+$upscope $end
+$scope module wtm_tb $end
 $var reg 8 ! a[7:0] $end
 $var reg 8 " b[7:0] $end
 $var reg 8 # p[7:0] $end
-$var reg 8 $ ksa_a[7:0] $end
-$var reg 8 % ksa_b[7:0] $end
-$var reg 8 & a_x[7:0] $end
-$var reg 8 ' b_x[7:0] $end
-$var reg 8 ( a_u[7:0] $end
-$var reg 8 ) b_u[7:0] $end
-$var reg 8 * a_s[7:0] $end
-$var reg 8 + b_s[7:0] $end
-$var reg 8 , ksa_sk[7:0] $end
-$var reg 8 - ksa_sx[7:0] $end
-$var reg 8 . p_ksa[7:0] $end
-$var reg 8 / ksa_s[7:0] $end
-$var reg 1 0 p_s $end
-$var reg 8 1 s00[7:0] $end
-$var reg 8 2 s01[7:0] $end
-$var reg 8 3 s02[7:0] $end
-$var reg 8 4 s03[7:0] $end
-$var reg 8 5 s04[7:0] $end
-$var reg 8 6 s05[7:0] $end
-$var reg 8 7 s06[7:0] $end
-$var reg 8 8 s07[7:0] $end
-$var reg 8 9 s12[7:0] $end
-$var reg 8 : s13[7:0] $end
-$var reg 8 ; s31[7:0] $end
-$var reg 10 < s10[9:0] $end
-$var reg 10 = s11[9:0] $end
-$var reg 10 > s21[9:0] $end
-$var reg 13 ? s20[12:0] $end
-$var reg 15 @ s30[14:0] $end
-$var reg 15 A s40[14:0] $end
-$var reg 8 B c10[7:0] $end
-$var reg 8 C c11[7:0] $end
-$var reg 8 D c20[7:0] $end
-$var reg 8 E c21[7:0] $end
-$var reg 10 F c30[9:0] $end
-$var reg 11 G c40[10:0] $end
+$scope module wallace_tree_multiplier $end
+$var reg 8 $ a[7:0] $end
+$var reg 8 % b[7:0] $end
+$var reg 8 & p[7:0] $end
+$var reg 8 ' ksa_a[7:0] $end
+$var reg 8 ( ksa_b[7:0] $end
+$var reg 8 ) a_x[7:0] $end
+$var reg 8 * b_x[7:0] $end
+$var reg 8 + a_u[7:0] $end
+$var reg 8 , b_u[7:0] $end
+$var reg 8 - a_s[7:0] $end
+$var reg 8 . b_s[7:0] $end
+$var reg 8 / ksa_sk[7:0] $end
+$var reg 8 0 ksa_sx[7:0] $end
+$var reg 8 1 p_ksa[7:0] $end
+$var reg 8 2 ksa_s[7:0] $end
+$var reg 1 3 p_s $end
+$var reg 8 4 s00[7:0] $end
+$var reg 8 5 s01[7:0] $end
+$var reg 8 6 s02[7:0] $end
+$var reg 8 7 s03[7:0] $end
+$var reg 8 8 s04[7:0] $end
+$var reg 8 9 s05[7:0] $end
+$var reg 8 : s06[7:0] $end
+$var reg 8 ; s07[7:0] $end
+$var reg 8 < s12[7:0] $end
+$var reg 8 = s13[7:0] $end
+$var reg 8 > s31[7:0] $end
+$var reg 10 ? s10[9:0] $end
+$var reg 10 @ s11[9:0] $end
+$var reg 10 A s21[9:0] $end
+$var reg 13 B s20[12:0] $end
+$var reg 15 C s30[14:0] $end
+$var reg 15 D s40[14:0] $end
+$var reg 8 E c10[7:0] $end
+$var reg 8 F c11[7:0] $end
+$var reg 8 G c20[7:0] $end
+$var reg 8 H c21[7:0] $end
+$var reg 10 I c30[9:0] $end
+$var reg 11 J c40[10:0] $end
 $scope module ksa1 $end
-$var reg 8 H a[7:0] $end
-$var reg 8 I b[7:0] $end
-$var reg 8 J s[7:0] $end
-$var reg 8 K propagate_0[7:0] $end
-$var reg 8 L propagate_1[7:0] $end
-$var reg 8 M propagate_2[7:0] $end
-$var reg 8 N propagate_3[7:0] $end
-$var reg 8 O propagate_4[7:0] $end
-$var reg 8 P generate_0[7:0] $end
-$var reg 8 Q generate_1[7:0] $end
-$var reg 8 R generate_2[7:0] $end
-$var reg 8 S generate_3[7:0] $end
-$var reg 8 T generate_4[7:0] $end
-$var reg 8 U carries[7:0] $end
-$var reg 8 V ksa_s[7:0] $end
+$var reg 8 K a[7:0] $end
+$var reg 8 L b[7:0] $end
+$var reg 8 M s[7:0] $end
+$var reg 8 N propagate_0[7:0] $end
+$var reg 8 O propagate_1[7:0] $end
+$var reg 8 P propagate_2[7:0] $end
+$var reg 8 Q propagate_3[7:0] $end
+$var reg 8 R propagate_4[7:0] $end
+$var reg 8 S generate_0[7:0] $end
+$var reg 8 T generate_1[7:0] $end
+$var reg 8 U generate_2[7:0] $end
+$var reg 8 V generate_3[7:0] $end
+$var reg 8 W generate_4[7:0] $end
+$var reg 8 X carries[7:0] $end
+$var reg 8 Y ksa_s[7:0] $end
 $scope module row_0(0) $end
 $upscope $end
 $scope module row_0(1) $end
@@ -159,21 +165,21 @@ $scope module sum(7) $end
 $upscope $end
 $upscope $end
 $scope module ksa2 $end
-$var reg 8 W a[7:0] $end
-$var reg 8 X b[7:0] $end
-$var reg 8 Y s[7:0] $end
-$var reg 8 Z propagate_0[7:0] $end
-$var reg 8 [ propagate_1[7:0] $end
-$var reg 8 \ propagate_2[7:0] $end
-$var reg 8 ] propagate_3[7:0] $end
-$var reg 8 ^ propagate_4[7:0] $end
-$var reg 8 _ generate_0[7:0] $end
-$var reg 8 ` generate_1[7:0] $end
-$var reg 8 a generate_2[7:0] $end
-$var reg 8 b generate_3[7:0] $end
-$var reg 8 c generate_4[7:0] $end
-$var reg 8 d carries[7:0] $end
-$var reg 8 e ksa_s[7:0] $end
+$var reg 8 Z a[7:0] $end
+$var reg 8 [ b[7:0] $end
+$var reg 8 \ s[7:0] $end
+$var reg 8 ] propagate_0[7:0] $end
+$var reg 8 ^ propagate_1[7:0] $end
+$var reg 8 _ propagate_2[7:0] $end
+$var reg 8 ` propagate_3[7:0] $end
+$var reg 8 a propagate_4[7:0] $end
+$var reg 8 b generate_0[7:0] $end
+$var reg 8 c generate_1[7:0] $end
+$var reg 8 d generate_2[7:0] $end
+$var reg 8 e generate_3[7:0] $end
+$var reg 8 f generate_4[7:0] $end
+$var reg 8 g carries[7:0] $end
+$var reg 8 h ksa_s[7:0] $end
 $scope module row_0(0) $end
 $upscope $end
 $scope module row_0(1) $end
@@ -392,74 +398,156 @@ $upscope $end
 $scope module ksa3 $end
 $upscope $end
 $upscope $end
+$upscope $end
 $enddefinitions $end
 #0
-bUUUUUUUU !
-bUUUUUUUU "
-bUUUUUUUU #
-bUUUUUUUU $
-bUUUUUUUU %
-bUUUUUUUU &
-bUUUUUUUU '
-bUUUUUUUU (
-bUUUUUUUU )
-b0UUUUUUU *
-b0UU00000 +
-bUUUUUUUU ,
-bUUUUUUUU -
-bUUUUUUUU .
+b00001000 !
+b00001000 "
+b01111111 #
+b00001000 $
+b00001000 %
+b01111111 &
+b00000111 '
+b00000111 (
+b11111000 )
+b11111000 *
+b00001000 +
+b00001000 ,
+b0UUUUUU0 -
+b0UU00000 .
 bUUUUUUUU /
-U0
+bUUUUUUUU 0
 bUUUUUUUU 1
 bUUUUUUUU 2
-bUUUUUUUU 3
-bUUUUUUUU 4
-bUUUUUUUU 5
-bUUUUUUUU 6
-bUUUUUUUU 7
-bUUUUUUUU 8
-bUUUUUUUU 9
-bUUUUUUUU :
-bUUUUUUUU ;
-bUUUUUUUUUU <
-bUUUUUUUUUU =
-bUUUUUUUUUU >
-bUUUUUUUUUUUUU ?
-bUUUUUUUUUUUUUUU @
-bUUUUUUUUUUUUUUU A
-bUUUUUUUU B
-bUUUUUUUU C
-bUUUUUUUU D
+03
+b00000000 4
+b00000000 5
+b00000000 6
+b00001000 7
+b00000000 8
+b00000000 9
+b00000000 :
+b00000000 ;
+b00000000 <
+b00000000 =
+bUUUUUUUU >
+b0UUUUUUUU0 ?
+b0UUUUUUUU0 @
+b0UUUUUUUUU A
+b0UUUUUUUUUUU0 B
+b0UUUUUUUUUUUUU0 C
+bUUUUUUUUUUUUUU0 D
 bUUUUUUUU E
-bUUUUUUUUUU F
-bUUUUUUUUUUU G
+bUUUUUUUU F
+bUUUUUUUU G
 bUUUUUUUU H
-b11111111 I
-bUUUUUUUU J
-bUUUUUUUU K
-bUUUUUUUU L
-bUUUUUUUU M
-bUUUUUUUU N
-bUUUUUUUU O
-bUUUUUUUU P
-bUUUUUUUU Q
-bUUUUUUUU R
-bUUUUUUUU S
-bUUUUUUUU T
-bUUUUUUUU U
-bUUUUUUUU V
-bUUUUUUUU W
-b11111111 X
-bUUUUUUUU Y
-bUUUUUUUU Z
-bUUUUUUUU [
-bUUUUUUUU \
-bUUUUUUUU ]
-bUUUUUUUU ^
-bUUUUUUUU _
-bUUUUUUUU `
-bUUUUUUUU a
-bUUUUUUUU b
-bUUUUUUUU c
-bUUUUUUUU d
-bUUUUUUUU e
+bUUUUUUUUUU I
+bUUUUUUUUUUU J
+b00001000 K
+b11111111 L
+b00000111 M
+b11110111 N
+b11100111 O
+b10000111 P
+b00000111 Q
+b00000111 R
+b00001000 S
+b00011000 T
+b01111000 U
+b11111000 V
+b11111000 W
+b11111000 X
+b00000111 Y
+b00001000 Z
+b11111111 [
+b00000111 \
+b11110111 ]
+b11100111 ^
+b10000111 _
+b00000111 `
+b00000111 a
+b00001000 b
+b00011000 c
+b01111000 d
+b11111000 e
+b11111000 f
+b11111000 g
+b00000111 h
+#10000000
+b10001000 !
+b10001010 "
+b10001000 $
+b10001010 %
+b10000111 '
+b10001001 (
+b01111000 )
+b01110110 *
+b01111000 +
+b01110110 ,
+b01111000 5
+b01111000 6
+b00000000 7
+b01111000 8
+b01111000 9
+b01111000 :
+b00000000 ;
+b01111000 <
+b00000000 =
+b0UUUUUUUU0 @
+b0UUUUUUUUU A
+b0UUUUUUUUUUU0 B
+b0UUUUUUUUUUUUU0 C
+b10001000 K
+b10000111 M
+b01110111 N
+b01100111 O
+b00000111 P
+b10001000 S
+b10011000 T
+b11111000 U
+b10000111 Y
+b10001010 Z
+b10001001 \
+b01110101 ]
+b01100001 ^
+b00000001 _
+b00000001 `
+b00000001 a
+b10001010 b
+b10011110 c
+b11111110 d
+b11111110 e
+b11111110 f
+b11111110 g
+b10001001 h
+#20000000
+b00001000 "
+b10000000 #
+b00001000 %
+b10000000 &
+b00000111 (
+b11111000 *
+b00001000 ,
+13
+b00000000 5
+b00000000 6
+b01111000 7
+b00000000 8
+b00000000 9
+b00000000 :
+b00000000 <
+b00001000 Z
+b00000111 \
+b11110111 ]
+b11100111 ^
+b10000111 _
+b00000111 `
+b00000111 a
+b00001000 b
+b00011000 c
+b01111000 d
+b11111000 e
+b11111000 f
+b11111000 g
+b00000111 h
+#30000000
