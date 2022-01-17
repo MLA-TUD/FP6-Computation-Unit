@@ -20,19 +20,6 @@ begin
 	wallace_tree_multiplier: wtm port map(a, b, p);
 	
 	process begin
-	
-	a <= "00001000";
-	b <= "00001000";
-	wait for 10 ns;
-	
-	a <= "10001000";
-	b <= "10001010";
-	wait for 10 ns;
-	
-	a <= "10001000";
-	b <= "00001000";
-	wait for 100 ns;
-	
 		for i in 0 to 255 loop
 			a <= std_logic_vector(to_unsigned(i, 8));
 			
