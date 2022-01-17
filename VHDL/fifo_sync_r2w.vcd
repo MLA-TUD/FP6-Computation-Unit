@@ -1,0 +1,29 @@
+$date
+  Mon Jan 17 10:55:56 2022
+$end
+$version
+  GHDL v0
+$end
+$timescale
+  1 fs
+$end
+$scope module standard $end
+$upscope $end
+$scope module std_logic_1164 $end
+$upscope $end
+$scope module numeric_std $end
+$upscope $end
+$scope module fifo_sync_r2w $end
+$var reg 9 ! wq2_rptr[8:0] $end
+$var reg 9 " rptr[8:0] $end
+$var reg 1 # wrst_n $end
+$var reg 1 $ wclk $end
+$var reg 9 % wq1_rptr[8:0] $end
+$upscope $end
+$enddefinitions $end
+#0
+bUUUUUUUUU !
+bUUUUUUUUU "
+U#
+U$
+bUUUUUUUUU %

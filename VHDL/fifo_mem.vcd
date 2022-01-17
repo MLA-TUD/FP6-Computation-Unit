@@ -1,0 +1,34 @@
+$date
+  Mon Jan 17 10:51:50 2022
+$end
+$version
+  GHDL v0
+$end
+$timescale
+  1 fs
+$end
+$scope module standard $end
+$upscope $end
+$scope module std_logic_1164 $end
+$upscope $end
+$scope module numeric_std $end
+$upscope $end
+$scope module fifo_mem $end
+$var reg 8 ! rdata[7:0] $end
+$var reg 8 " wdata[7:0] $end
+$var reg 8 # raddress[7:0] $end
+$var reg 8 $ waddress[7:0] $end
+$var reg 1 % wclken $end
+$var reg 1 & wfull $end
+$var reg 1 ' wclk $end
+$comment ram is not handled $end
+$upscope $end
+$enddefinitions $end
+#0
+bUUUUUUUU !
+bUUUUUUUU "
+bUUUUUUUU #
+bUUUUUUUU $
+U%
+U&
+U'
