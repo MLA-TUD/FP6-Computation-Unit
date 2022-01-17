@@ -14,17 +14,13 @@ architecture behavior of pipo is
 	-- m: memory
 	signal m : std_logic_vector(7 downto 0);
 begin
-	reset: process(r)
-		if r = '1' then
-			m = "00000000";
-			b <= m;
-		end if;
-	end process reset;
-	
-	save: process begin(c, a)
-		if c'event and c = '1' then
-			m <= a;
-			b <= m;
-		end if;
-	end process save;
+    
+	process(c, r) begin
+    if r = '1' then m <= (others => '0');
+    elsif rising_edge(c) then
+      m <= a;
+    end if;
+  	b <= m;
+  end process;
+  
 end behavior;
