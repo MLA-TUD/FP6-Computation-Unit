@@ -38,7 +38,7 @@ architecture behavior of mac is
 	end component pipo;
 	
 	-- p: product; m: memory; s: sum
-	signal p, m : std_logic_vector(7 downto 0);
+	signal p, m, s, pipo_out : std_logic_vector(7 downto 0) := "00000000";
 
 begin
 	wallace_tree_multiplier: wtm port map(a, b, p);

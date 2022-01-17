@@ -12,7 +12,7 @@ end pipo;
 
 architecture behavior of pipo is
 	-- m: memory
-	signal m : std_logic_vector(7 downto 0);
+	signal m : std_logic_vector(7 downto 0) := "00000000";
 begin
     
 	process(c, r) begin
