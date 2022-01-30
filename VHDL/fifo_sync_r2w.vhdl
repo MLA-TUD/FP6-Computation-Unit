@@ -4,26 +4,26 @@ use IEEE.numeric_std.all;
 
 entity fifo_sync_r2w is generic(addressSize:integer:=8);
     port(
-        wq2_rPtr: out std_logic_vector(addressSize downto 0);
-        rPtr: in std_logic_vector(addressSize downto 0);
-        wRst_n: in std_logic;
-        wClk: in std_logic
+        wq2_rptr: out std_logic_vector(addressSize downto 0);
+        rptr: in std_logic_vector(addressSize downto 0);
+        wrst_n: in std_logic;
+        wclk: in std_logic
     );
 end entity fifo_sync_r2w;
 
 architecture fifo_sync_r2w_behaviour of fifo_sync_r2w is
-    signal wq1_rPtr: std_logic_vector(addressSize downto 0);
+    signal wq1_rptr: std_logic_vector(addressSize downto 0);
     
     begin
-        process(wClk,wRst_n)
+        process(wclk,wrst_n)
         begin
-            if rising_edge(wClk) or falling_edge(wRst_n) then
-                if (wRst_n='0') then
-                    wq2_rPtr <= (others => '0');
-                    wq1_rPtr <= (others => '0');
+            if rising_edge(wclk) or falling_edge(wrst_n) then
+                if (wrst_n='0') then
+                    wq2_rptr <= (others => '0');
+                    wq1_rptr <= (others => '0');
                 else
-                    wq2_rPtr <= wq1_rPtr;
-                    wq1_rPtr <= rPtr;
+                    wq2_rptr <= wq1_rptr;
+                    wq1_rptr <= rptr;
                 end if;
             end if;
         end process;

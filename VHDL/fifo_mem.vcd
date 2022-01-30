@@ -1,5 +1,5 @@
 $date
-  Mon Jan 17 10:51:50 2022
+  Sun Jan 30 13:48:03 2022
 $end
 $version
   GHDL v0
@@ -16,8 +16,8 @@ $upscope $end
 $scope module fifo_mem $end
 $var reg 8 ! rdata[7:0] $end
 $var reg 8 " wdata[7:0] $end
-$var reg 8 # raddress[7:0] $end
-$var reg 8 $ waddress[7:0] $end
+$var reg 8 # raddr[7:0] $end
+$var reg 8 $ waddr[7:0] $end
 $var reg 1 % wclken $end
 $var reg 1 & wfull $end
 $var reg 1 ' wclk $end
