@@ -26,7 +26,6 @@ begin
     signal winc, wclk, wrst_n: std_logic;
     signal rinc, rclk, rrst_n: std_logic;
 	fi_fo: fifo generic map(8 => dataSize, 2 => addressSize) port map(rdata, wfull, rempty, wdata, winc, wclk, wrst_n,rinc, rclk, rrst_n);
-	
 	process begin
 		-- ?
 		wait;
