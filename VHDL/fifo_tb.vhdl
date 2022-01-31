@@ -6,12 +6,15 @@ end fifo_tb;
 
 architecture test of fifo_tb is
 	component fifo is -- first-in first-out (parallel-in parallel-out)
-		port ( -- c: clock; r: reset
-			a : in std_logic_vector(7 downto 0);
-			c : in std_logic;
-			r : in std_logic;
-			b : out std_logic_vector(7 downto 0)
-		);
+		generic(dataSize:integer:=8;addressSize:integer:=8);
+        port(
+            rdata: out std_logic_vector(dataSize-1 downto 0);
+            wfull: out std_logic;
+            rempty: out std_logic;
+            wdata: in std_logic_vector(dataSize-1 downto 0);
+            winc, wclk, wrst_n: in std_logic;
+            rinc, rclk, rrst_n: in std_logic
+    );
 	end component fifo;
 	
 	-- ?
