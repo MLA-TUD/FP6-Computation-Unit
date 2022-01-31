@@ -19,7 +19,7 @@ architecture test of fifo_tb is
 	
 	-- ?
 begin
-	fi_fo: fifo port map( ? );
+	--fi_fo: fifo port map( ? );
 	
 	process begin
 		-- ?
