@@ -19,7 +19,13 @@ architecture test of fifo_tb is
 	
 	-- ?
 begin
-	fi_fo: fifo port map( ? );
+    signal rdata: std_logic_vector(dataSize-1 downto 0);
+    signal wfull: std_logic;
+    signal rempty: std_logic;
+    signal wdata: std_logic_vector(dataSize-1 downto 0);
+    signal winc, wclk, wrst_n: std_logic;
+    signal rinc, rclk, rrst_n: std_logic;
+	fi_fo: fifo generic map(8 => dataSize, 2 => addressSize) port map(rdata, wfull, rempty, wdata, winc, wclk, wrst_n,rinc, rclk, rrst_n);
 	
 	process begin
 		-- ?
