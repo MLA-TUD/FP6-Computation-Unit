@@ -30,6 +30,8 @@ begin
         rinc <= '0';
         winc <= '0';
         rclk <= '0';
+        wclk <= '0';
+        wdata <= "00000000";
         
         --reset synchronisation
         wrst_n <= '1';
@@ -44,7 +46,7 @@ begin
         -- One cycle for clean startup
         wait for 1 ns;wclk <= '1';rclk <= '1';wait for 1 ns; wclk <= '0';rclk <= '0';
 
-		wdata <= "00000000";
+		-- fill fifo with some values
         winc <= '1';
         wait for 1 ns;wclk <= '1';rclk <= '1';wait for 1 ns; wclk <= '0';rclk <= '0';
         
