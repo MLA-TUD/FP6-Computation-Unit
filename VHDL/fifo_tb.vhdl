@@ -115,21 +115,21 @@ begin
         report "test failed for wfull = 0 when empty" severity error;
         
         
-        wdata <= "00000001";
+        wdata <= "11111111";
         wait for 1 ns;wclk <= '1';rclk <= '1';wait for 1 ns; wclk <= '0';rclk <= '0';
 	assert (rempty = '1')
         report "test failed for rempty = 1 for 1 item" severity error;
         assert (wfull= '0')
         report "test failed for wfull = 0 for 1 item" severity error;
 
-        wdata <= "00000010";
+        wdata <= "11111110";
         wait for 1 ns;wclk <= '1';rclk <= '1';wait for 1 ns; wclk <= '0';rclk <= '0';
 	assert (rempty = '1')
         report "test failed for rempty = 1 for 2 items" severity error;
         assert (wfull= '0')
         report "test failed for wfull = 0 for 2 items" severity error;
 
-        wdata <= "00000011";
+        wdata <= "11111111";
         wait for 1 ns;wclk <= '1';rclk <= '1';wait for 1 ns; wclk <= '0';rclk <= '0';
 	assert (rempty = '0')
 	report "test failed for rempty = 0 when full" severity error;
@@ -141,15 +141,15 @@ begin
         rinc <= '1';
         
         wait for 1 ns;wclk <= '1';rclk <= '1';wait for 1 ns; wclk <= '0';rclk <= '0';
-        assert (rdata = "00000001")
+        assert (rdata = "11111111")
         report "test failed for read combination 01" severity error;
         
         wait for 1 ns;wclk <= '1';rclk <= '1';wait for 1 ns; wclk <= '0';rclk <= '0';
-        assert (rdata = "00000010")
+        assert (rdata = "11111110")
         report "test failed for read combination 10" severity error;
         
         wait for 1 ns;wclk <= '1';rclk <= '1';wait for 1 ns; wclk <= '0';rclk <= '0';
-        assert (rdata = "00000011")
+        assert (rdata = "11111111")
         report "test failed for read combination 11" severity error;
         
         wait for 1 ns;wclk <= '1';rclk <= '1';wait for 1 ns; wclk <= '0';rclk <= '0';
