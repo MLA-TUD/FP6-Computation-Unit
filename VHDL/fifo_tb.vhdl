@@ -1,5 +1,6 @@
 library ieee;
 use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
 
 entity fifo_tb is -- first-in first-out testbench (parallel-in parallel-out)
 end fifo_tb;
@@ -17,7 +18,7 @@ architecture test of fifo_tb is
     );
 	end component fifo;
 	
-	signal rdata: std_logic_vector(7 downto 0);
+    signal rdata: std_logic_vector(7 downto 0);
     signal wfull: std_logic;
     signal rempty: std_logic;
     signal wdata: std_logic_vector(7 downto 0);
@@ -42,36 +43,124 @@ begin
         wait for 1 ns;
         wrst_n <= '1';
         rrst_n <= '1';
-
+	report "Started Testing";
         -- One cycle for clean startup
         wait for 1 ns;wclk <= '1';rclk <= '1';wait for 1 ns; wclk <= '0';rclk <= '0';
 
-		-- fill fifo with some values
+	-- fill fifo with some values
+	report "First fill";
         winc <= '1';
         wait for 1 ns;wclk <= '1';rclk <= '1';wait for 1 ns; wclk <= '0';rclk <= '0';
+        assert (rempty = '1')
+        report "test failed for rempty = 1 when empty" severity error;
+        assert (wfull= '0')
+        report "test failed for wfull = 0 when empty" severity error;
+        
         
         wdata <= "00000001";
         wait for 1 ns;wclk <= '1';rclk <= '1';wait for 1 ns; wclk <= '0';rclk <= '0';
+	assert (rempty = '1')
+        report "test failed for rempty = 1 for 1 item" severity error;
+        assert (wfull= '0')
+        report "test failed for wfull = 0 for 1 item" severity error;
 
         wdata <= "00000010";
         wait for 1 ns;wclk <= '1';rclk <= '1';wait for 1 ns; wclk <= '0';rclk <= '0';
+	assert (rempty = '1')
+        report "test failed for rempty = 1 for 2 items" severity error;
+        assert (wfull= '0')
+        report "test failed for wfull = 0 for 2 items" severity error;
 
         wdata <= "00000011";
         wait for 1 ns;wclk <= '1';rclk <= '1';wait for 1 ns; wclk <= '0';rclk <= '0';
-       
+	assert (rempty = '0')
+	report "test failed for rempty = 0 when full" severity error;
+	assert (wfull= '1')
+        report "test failed for wfull = 1 when full" severity error;
 
         -- read out for several cycles
         winc <= '0';
         rinc <= '1';
+        
         wait for 1 ns;wclk <= '1';rclk <= '1';wait for 1 ns; wclk <= '0';rclk <= '0';
+        assert (rdata = "00000001")
+        report "test failed for read combination 01" severity error;
+        
         wait for 1 ns;wclk <= '1';rclk <= '1';wait for 1 ns; wclk <= '0';rclk <= '0';
+        assert (rdata = "00000010")
+        report "test failed for read combination 10" severity error;
+        
         wait for 1 ns;wclk <= '1';rclk <= '1';wait for 1 ns; wclk <= '0';rclk <= '0';
+        assert (rdata = "00000011")
+        report "test failed for read combination 11" severity error;
+        
         wait for 1 ns;wclk <= '1';rclk <= '1';wait for 1 ns; wclk <= '0';rclk <= '0';
+        assert (rdata = "00000000")
+        report "test failed: read from stack is not 00000000" severity error;
+      
         wait for 1 ns;wclk <= '1';rclk <= '1';wait for 1 ns; wclk <= '0';rclk <= '0';
         wait for 1 ns;wclk <= '1';rclk <= '1';wait for 1 ns; wclk <= '0';rclk <= '0';
         wait for 1 ns;wclk <= '1';rclk <= '1';wait for 1 ns; wclk <= '0';rclk <= '0';
         
+
+                
+        -- fill for several cycles again
+        report "Second fill";
+        winc <= '1';
+        rinc <= '0';
+        wait for 1 ns;wclk <= '1';rclk <= '1';wait for 1 ns; wclk <= '0';rclk <= '0';
+        assert (rempty = '1')
+        report "test failed for rempty = 1 when empty" severity error;
+        assert (wfull= '0')
+        report "test failed for wfull = 0 when empty" severity error;
         
+        
+        wdata <= "00000001";
+        wait for 1 ns;wclk <= '1';rclk <= '1';wait for 1 ns; wclk <= '0';rclk <= '0';
+	assert (rempty = '1')
+        report "test failed for rempty = 1 for 1 item" severity error;
+        assert (wfull= '0')
+        report "test failed for wfull = 0 for 1 item" severity error;
+
+        wdata <= "00000010";
+        wait for 1 ns;wclk <= '1';rclk <= '1';wait for 1 ns; wclk <= '0';rclk <= '0';
+	assert (rempty = '1')
+        report "test failed for rempty = 1 for 2 items" severity error;
+        assert (wfull= '0')
+        report "test failed for wfull = 0 for 2 items" severity error;
+
+        wdata <= "00000011";
+        wait for 1 ns;wclk <= '1';rclk <= '1';wait for 1 ns; wclk <= '0';rclk <= '0';
+	assert (rempty = '0')
+	report "test failed for rempty = 0 when full" severity error;
+	assert (wfull= '1')
+        report "test failed for wfull = 1 when full" severity error;
+        
+        -- read out for several cycles
+        winc <= '0';
+        rinc <= '1';
+        
+        wait for 1 ns;wclk <= '1';rclk <= '1';wait for 1 ns; wclk <= '0';rclk <= '0';
+        assert (rdata = "00000001")
+        report "test failed for read combination 01" severity error;
+        
+        wait for 1 ns;wclk <= '1';rclk <= '1';wait for 1 ns; wclk <= '0';rclk <= '0';
+        assert (rdata = "00000010")
+        report "test failed for read combination 10" severity error;
+        
+        wait for 1 ns;wclk <= '1';rclk <= '1';wait for 1 ns; wclk <= '0';rclk <= '0';
+        assert (rdata = "00000011")
+        report "test failed for read combination 11" severity error;
+        
+        wait for 1 ns;wclk <= '1';rclk <= '1';wait for 1 ns; wclk <= '0';rclk <= '0';
+        assert (rdata = "00000000")
+        report "test failed: read from stack is not 00000000" severity error;
+        
+        wait for 1 ns;wclk <= '1';rclk <= '1';wait for 1 ns; wclk <= '0';rclk <= '0';
+        wait for 1 ns;wclk <= '1';rclk <= '1';wait for 1 ns; wclk <= '0';rclk <= '0';
+        wait for 1 ns;wclk <= '1';rclk <= '1';wait for 1 ns; wclk <= '0';rclk <= '0';
+        
+        report "Ended Testing";
 		wait;
 	end process;
 end test;
