@@ -7,7 +7,9 @@ entity mac is -- multiply-accumulate unit
 		b : in std_logic_vector(7 downto 0);
 		c : in std_logic;
 		r : in std_logic;
-		d : out std_logic_vector(7 downto 0)
+		d : out std_logic_vector(7 downto 0);
+		e : out std_logic_vector(7 downto 0);
+		f : out std_logic_vector(7 downto 0)
 	);
 end mac;
 
@@ -46,6 +48,10 @@ begin
 	kogge_stone_adder: ksa port map(m, p, s);
 	
 	register_8bit: pipo port map(s, c, r, m);
+	
+	regsiter_x: pipo port map(a, c, r, e);
+	
+	register_y: pipo port map(b, c, r, f);
 	
 	d <= m;
 end behavior;
