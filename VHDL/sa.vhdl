@@ -2,8 +2,8 @@ library ieee;
 use ieee.std_logic_1164.all;
 
 package a is
-	type std_1d_vector_array is array(0 to 8) of std_logic_vector(7 downto 0);
-	type std_2d_vector_array is array(0 to 8, 0 to 8) of std_logic_vector(7 downto 0);
+	type std_1d_vector_array is array(0 to 7) of std_logic_vector(7 downto 0);
+	type std_2d_vector_array is array(0 to 7, 0 to 7) of std_logic_vector(7 downto 0);
 end package a;
 
 library work;
