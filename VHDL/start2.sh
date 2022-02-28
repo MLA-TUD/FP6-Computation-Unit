@@ -3,7 +3,7 @@
 abort() #is executed on an error so the script stops
 {
     echo "An error occurred. Exiting..."
-    exit 1
+   # exit 1
 }
 
 trap 'abort' 0
@@ -37,7 +37,7 @@ if ghdl -e $unit ; then
     echo "Build ok"
 else
     echo "Build failed"
-    exit 1
+   # exit 1
 fi
 done
 for file in "$@"
@@ -48,7 +48,7 @@ if ghdl -r $unittb --vcd=$unittb.vcd ; then
     echo "Testbench dump ok"
 else
     echo "Testbench dump failed"
-    exit 1
+   # exit 1
 fi
 done
 echo "start gtkwave..."
