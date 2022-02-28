@@ -13,15 +13,17 @@ component mac is -- multiply-accumulate unit
 		b : in std_logic_vector(7 downto 0);
 		c : in std_logic;
 		r : in std_logic;
-		d : out std_logic_vector(7 downto 0)
+		d : out std_logic_vector(7 downto 0);
+		e : out std_logic_vector(7 downto 0);
+		f : out std_logic_vector(7 downto 0)
 	);
 end component;
 
 signal c, r : std_logic;
-signal a, b, d: std_logic_vector(7 downto 0):= "00000000";
+signal a, b, d, e, f: std_logic_vector(7 downto 0):= "00000000";
 
 begin
-    reg: mac port map(c => c, r => r, a => a, b => b, d => d);
+    reg: mac port map(a => a, b => b, c => c, r => r, d => d, e => e, f => f);
     process begin
         forloopc: for i in 100 downto 0 loop
             c <= '0';
