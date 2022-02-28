@@ -38,8 +38,8 @@ begin
     
    gen1 : FOR i IN 0 TO size-1 GENERATE
     --fill first lines
-    hor(i, 0) <= a(i);
-    ver(0, i) <= b(i);
+    hor(0, i) <= a(i);
+    ver(i, 0) <= b(i);
       gen2 : FOR j IN 0 TO size-1 GENERATE
         mac1 : mac port map(a => hor(i, j), b => ver(i,j), c => c, r => r, d => d(i, j), e => hor(i+1, j+1), f => ver(i+1, j+1) );
       END GENERATE;  

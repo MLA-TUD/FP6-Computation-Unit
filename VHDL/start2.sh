@@ -10,6 +10,23 @@ trap 'abort' 0
 
 set -e # exit on error flag
 
+for file in $(find . -name "*.vhd") #handle all package files
+do
+echo "start package file anaysis"
+if ghdl -s $file ; then
+    echo "Syntax ok"
+else
+    echo "Syntax failed"
+    exit 1
+fi
+if ghdl -a $file ; then
+    echo "Anaysis ok"
+else
+    echo "Anaysis failed"
+    exit 1
+fi
+
+done
 for file in $(find . -name "*.vhdl") #handle all paramter files
 do
 #if [[$file == *.vhdl ]]; then

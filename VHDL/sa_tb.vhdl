@@ -24,9 +24,13 @@ architecture test of sa_tb is
 	signal a, b: std_1d_vector_array;
 	signal c, r: std_logic;
 	signal d: std_2d_vector_array;
+	
+	signal outputVector: std_logic_vector(7 downto 0);
 begin
 
     sa1: sa port map(a => a, b => b, c => c, r => r, d => d);
+    
+    outputVector <= getVectored2D(d);
 	
 	process begin
         forloopc: for i in 100 downto 0 loop
