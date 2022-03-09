@@ -7,7 +7,9 @@ package array_vector_package is
  
   constant size : integer := 7;
   
-  type std_1d_vector_array is array(0 to size) of std_logic_vector(7 downto 0);
+  type std_1d_vector_array is array(0 to size) of std_logic_vector(7 downto 0); -- warum nicht natural range, so könnte man die Größe variabel halten
+    --type std_1d_vector_array is array(natural range <>) of std_logic_vector;
+    -- benutzen mit:    a : in std_1d_vector_array(0 to ArraySize-1)(NumSize-1 downto 0); wobei ArraySize  und NumSize generics in der Hauptentität sind
   type std_2d_vector_array is array(0 to size, 0 to size) of std_logic_vector(7 downto 0);
   type std_2d_vector_array_length9 is array(0 to size+1, 0 to size+1) of std_logic_vector(7 downto 0);
  
