@@ -7,7 +7,7 @@ package array_vector_package is
  
   constant size : integer := 7;
   
-  type std_1d_vector_array is array(0 to size) of std_logic_vector(7 downto 0); -- warum nicht natural range, so könnte man die Größe variabel halten
+  type std_1d_vector_array is array(0 to size) of std_logic_vector(7 downto 0); -- warum nicht natural range, so könnte man die Groesse variabel halten
     --type std_1d_vector_array is array(natural range <>) of std_logic_vector;
     -- benutzen mit:    a : in std_1d_vector_array(0 to ArraySize-1)(NumSize-1 downto 0); wobei ArraySize  und NumSize generics in der Hauptentität sind
   type std_2d_vector_array is array(0 to size, 0 to size) of std_logic_vector(7 downto 0);
@@ -16,7 +16,7 @@ package array_vector_package is
  function getVectored (i_vector : in std_1d_vector_array) -- you just got vectored!!1!
     return std_logic_vector;
     
- function getVectored2D (i_vector : in std_2d_vector_array) -- you just got vectored!!1!
+ function getVectored2D (i_vector : in std_2d_vector_array; i : in integer; j : in integer) -- you just got vectored!!1!
     return std_logic_vector;
    
    
@@ -31,10 +31,10 @@ package body array_vector_package is
     return i_vector(0);
   end;
   
-  function getVectored2D (i_vector : in std_2d_vector_array)
-    return std_logic_vector is 
+  function getVectored2D (i_vector : in std_2d_vector_array; i : in integer; j : in integer)
+    return std_logic_vector is
   begin
-    return i_vector(0, 1);
+    return i_vector(i, j);
   end;
  
 end package body array_vector_package;
