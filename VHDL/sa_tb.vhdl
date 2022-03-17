@@ -10,20 +10,22 @@ entity sa_tb is -- systolic array testbench
 end sa_tb;
 
 architecture test of sa_tb is
-	
+
 	component sa is -- systolic array
         port ( -- c: clock; r: reset
-            a : in std_1d_vector_array; -- upper side
-            b : in std_1d_vector_array; -- left side
+            a : in std_1d_vector_array(0 to array_size-1); -- upper side
+            b : in std_1d_vector_array(0 to array_size-1); -- left side
             c : in std_logic;
             r : in std_logic;
-            d : out std_2d_vector_array
+            d : out std_2d_vector_array(0 to array_size-1, 0 to array_size-1)
         );
     end component;
 
-	signal a, b: std_1d_vector_array;
+    --constant array_size : integer := 8;
+    
+	signal a, b: std_1d_vector_array(0 to array_size-1)  ;
 	signal c, r: std_logic;
-	signal d: std_2d_vector_array;
+	signal d: std_2d_vector_array(0 to array_size-1, 0 to array_size-1);
 	
 	signal outputVector1: std_logic_vector(7 downto 0);
 	signal outputVector2: std_logic_vector(7 downto 0);
