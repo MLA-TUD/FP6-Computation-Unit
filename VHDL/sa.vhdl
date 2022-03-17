@@ -5,7 +5,7 @@ library ieee;
 use ieee.std_logic_1164.all;
 
 entity sa is -- systolic array
-	generic ( -- size: of the array Hier bitte einen eindeutigen Namen geben z.B. SystolicArraySize da noch mehr generics dazu kommen werden
+	generic ( -- size: of the array | Hier bitte einen eindeutigen Namen geben z.B. SystolicArraySize da noch mehr generics dazu kommen werden
 		size : positive := 8
 	);
 	port ( -- c: clock; r: reset
