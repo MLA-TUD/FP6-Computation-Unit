@@ -9,6 +9,7 @@ end sa_tb;
 
 architecture test of sa_tb is
 	component sa is		-- systolic array
+		generic (systolic_Array_Size:integer := 8);		-- for setting the size of the calculation matrix
 		port (
 			a : in std_1d_vector_array(0 to array_size-1);						-- input 1: (top)	1-dimensional array of: 8-bit signed (2k) data
 			b : in std_1d_vector_array(0 to array_size-1);						-- input 2: (left)	1-dimensional array of: 8-bit signed (2k) data
@@ -23,7 +24,7 @@ architecture test of sa_tb is
 	signal d: std_2d_vector_array(0 to array_size-1, 0 to array_size-1);
 	
 begin
-	sa1: sa port map(a => a, b => b, c => c, r => r, d => d);
+	sa1: sa generic map(systolic_Array_Size=>array_size) port map(a => a, b => b, c => c, r => r, d => d);
 	
 	process begin
         forloopc: for i in 100 downto 0 loop	-- for repeating the clock signal	(until 1000 ns)
