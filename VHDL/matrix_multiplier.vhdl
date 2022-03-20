@@ -53,6 +53,17 @@ architecture behavior of matrix_multiplier is
 		q : out std_logic_vector((2**bitSize - 1) downto 0)	
 	);
     end component demux;
+
+    component comparator is	
+    generic (
+        bitSize : integer := 8
+    );
+	port (		
+        a : in std_logic_vector((bitSize - 1) downto 0);	
+		b : in std_logic_vector((bitSize - 1) downto 0);	
+        eq : out std_logic
+	);
+    end component comparator;
     
 begin
 	process(a,b) begin
