@@ -1,55 +1,54 @@
 library ieee;
 use ieee.std_logic_1164.all;
 
-entity wtm is -- wallace-tree multiplier (twos complement, 8-Bit product)
-	port ( -- p: product
-		a : in std_logic_vector(7 downto 0);
-		b : in std_logic_vector(7 downto 0);
-		p : out std_logic_vector(7 downto 0)
+entity wtm is	-- wallace-tree multiplier (twos complement (2k) correct, 8-Bit (not 16-bit) (shortened) product)
+	port (
+		a : in std_logic_vector(7 downto 0);	-- input 1: 8-bit signed (2k) data
+		b : in std_logic_vector(7 downto 0);	-- input 2: 8-bit signed (2k) data
+		p : out std_logic_vector(7 downto 0)	-- output product: 8-bit signed (2k) data
 	);
 end wtm;
 
 architecture behavior of wtm is
-	component ha is -- half adder
-		port ( -- s: sum; c: carry
-			a : in std_logic;
-			b : in std_logic;
-			s : out std_logic;
-			c : out std_logic
+	component ha is		-- half adder
+		port (
+			a : in std_logic;	-- input 1: bit
+			b : in std_logic;	-- input 2: bit
+			s : out std_logic;	-- output sum: bit
+			c : out std_logic	-- output carry: bit
 		);
 	end component ha;
 	
-	component fa is -- full adder
-		port ( -- s: sum; c: carry
-			a : in std_logic;
-			b : in std_logic;
-			c_in : in std_logic;
-			s : out std_logic;
-			c_out : out std_logic
+	component fa is		-- full adder
+		port (
+			a : in std_logic;		-- input 1: bit
+			b : in std_logic;		-- input 2: bit
+			c_in : in std_logic;	-- input (carry) 3: bit
+			s : out std_logic;		-- output sum: bit
+			c_out : out std_logic	-- output carry: bit
 		);
 	end component fa;
 	
-	component ksa is -- kogge-stone adder (twos complement)
-		port ( -- s: sum
-			a : in std_logic_vector(7 downto 0);
-			b : in std_logic_vector(7 downto 0);
-			s : out std_logic_vector(7 downto 0)
+	component ksa is	-- kogge-stone adder (twos complement (2k) correct)
+		port (
+			a : in std_logic_vector(7 downto 0);	-- input 1: 8-bit signed (2k) data
+			b : in std_logic_vector(7 downto 0);	-- input 2: 8-bit signed (2k) data
+			s : out std_logic_vector(7 downto 0)	-- output sum: 8-bit data (twos complement correct)
 		);
 	end component ksa;
 	
-	component ksa_oo is -- kogge-stone adder (twos complement)
-		port ( -- s: sum
-			a : in std_logic_vector(7 downto 0);
-			b : in std_logic_vector(7 downto 0);
-			s : out std_logic_vector(7 downto 0)
+	component ksa_oo is		-- kogge-stone adder (unsigned and without overflow-detection)
+		port (
+			a : in std_logic_vector(7 downto 0);	-- input 1: 8-bit unsigned data
+			b : in std_logic_vector(7 downto 0);	-- input 2: 8-bit unsigned data
+			s : out std_logic_vector(7 downto 0)	-- output sum: 8-bit unsigned data
 		);
 	end component ksa_oo;
 	
-	-- u: unsigned
-	signal ksa_a, ksa_b, a_x, b_x, a_u, b_u, a_s, b_s, ksa_sk, ksa_sx, p_ksa, ksa_s : std_logic_vector(7 downto 0);
+	signal ksa_a, ksa_b, a_x, b_x, a_u, b_u, a_s, b_s, ksa_sk, ksa_sx, p_ksa, ksa_s : std_logic_vector(7 downto 0);		-- u: unsigned
 	signal p_s : std_logic;
 	
-	-- s: sum; c: carry
+	-- s: sum; c: carry	(per Stage)
 	signal s00, s01, s02, s03, s04, s05, s06, s07, s12, s13, s31 : std_logic_vector(7 downto 0);
 	signal s10, s11, s21 : std_logic_vector(9 downto 0);
 	signal s20 : std_logic_vector(12 downto 0);
@@ -59,20 +58,21 @@ architecture behavior of wtm is
 	signal c40 : std_logic_vector(10 downto 0);
 	
 begin
-	-- unsigned values
-	ksa1: ksa_oo port map(a, "11111111", ksa_a);
-	a_x <= ksa_a xor"11111111";
-	a_u <=
+	-- get unsigned 8-bit values from 8-bit 2k values (a and b)
+	ksa1: ksa_oo port map(a, "11111111", ksa_a);	-- -1
+	a_x <= ksa_a xor"11111111";						-- complement
+	a_u <=											-- choose by sign
 		'0' & a(6 downto 0) when a(7) = '0' else
 		a_x;
 	
-	ksa2: ksa_oo port map(b, "11111111", ksa_b);
-	b_x <= ksa_b xor"11111111";
-	b_u <=
+	ksa2: ksa_oo port map(b, "11111111", ksa_b);	-- -1
+	b_x <= ksa_b xor"11111111";						-- complement
+	b_u <=											-- choose by sign
 		'0' & b(6 downto 0) when b(7) = '0' else
 		b_x;
 	
-    -- Stage 1:    (Multiplication  ->  Additions)
+	
+    -- Stage 1:		(Multiplication  ->  Additions)
 	row_0: for i in 0 to 7 generate
 		s00(i) <= a_u(i) and b_u(0);
 		s01(i) <= a_u(i) and b_u(1);
@@ -84,7 +84,7 @@ begin
 		s07(i) <= a_u(i) and b_u(7);
 	end generate row_0;
 	
-	-- Stage 2.?    (8 rows  ->  2 rows)
+	-- Stage 2.?	(8 rows  ->  2 rows)
 	-- 1:
 	s10(0) <= s00(0);
     ha00: ha port map(s00(1), s01(0), s10(1), c10(0));
@@ -174,10 +174,10 @@ begin
 	fa37: fa port map(s30(13), c30(9), s31(6), s40(13), c40(9));
 	ha14: ha port map(s30(14), s31(7), s40(14), c40(10));
     
-    -- Stage 3:   (ksa: 8-Bit)
+    -- Stage 3:		(ksa: 8-Bit (shortened))
 	a_s <= '0' & s40(6 downto 0);
 	b_s <= '0' & c40(1 downto 0) & "00000";
-	ksa0: ksa port map(a_s, b_s, ksa_s);
+	ksa0: ksa port map(a_s, b_s, ksa_s);	-- add up last two (remaining) rows (unsigned values) (shortened -> only need 7-bit value)
 	
 	-- Sign:
 	p_s <=
@@ -185,9 +185,9 @@ begin
 		'0';
 	p(7) <= p_s;
 	
-	ksa_sk <= ksa_s xor "11111111";
-	ksa3: ksa port map(ksa_sk, "00000001", ksa_sx);
-	p_ksa <=
+	ksa_sk <= ksa_s xor "11111111";						-- complement
+	ksa3: ksa port map(ksa_sk, "00000001", ksa_sx);		-- +1
+	p_ksa <=											-- choose by sign
 		ksa_s when p_s = '0' else
 		ksa_sx;
 	
@@ -201,28 +201,28 @@ end behavior;
 library ieee;
 use ieee.std_logic_1164.all;
 
-entity ksa_oo is -- kogge-stone adder (without overflow-detection)
-	port ( -- s: sum
-		a : in std_logic_vector(7 downto 0);
-		b : in std_logic_vector(7 downto 0);
-		s : out std_logic_vector(7 downto 0)
+entity ksa_oo is	-- kogge-stone adder (unsigned and without overflow-detection)	(only needed for unsigned-2k conversion in this wtm)
+	port (			-- like the normal ksa, but without: 2k over- and underflow checks
+		a : in std_logic_vector(7 downto 0);	-- input 1: 8-bit unsigned data
+		b : in std_logic_vector(7 downto 0);	-- input 2: 8-bit unsigned data
+		s : out std_logic_vector(7 downto 0)	-- output sum: 8-bit unsigned data
 	);
 end ksa_oo;
 
 architecture behavior of ksa_oo is
-	signal propagate_0, propagate_1, propagate_2, propagate_3, propagate_4 : std_logic_vector(7 downto 0);
-	signal generate_0, generate_1, generate_2, generate_3, generate_4 : std_logic_vector(7 downto 0);
-	signal carries : std_logic_vector(7 downto 0);
-	signal ksa_s : std_logic_vector(7 downto 0);
+	signal propagate_0, propagate_1, propagate_2, propagate_3, propagate_4 : std_logic_vector(7 downto 0);	-- proparate per row:	P_{i+1} = P_i AND P_{i_prev}
+	signal generate_0, generate_1, generate_2, generate_3, generate_4 : std_logic_vector(7 downto 0);		-- generate per row:	G_{i+1} = (P_i AND G_{i_prev}) OR G_i
+	signal carries : std_logic_vector(7 downto 0);	-- that are generated by the calculation
+	signal ksa_s : std_logic_vector(7 downto 0);	-- calculated sum of "a + b"
 	
 begin
-	-- row_0:
+	-- row 0:
 	row_0: for i in 7 downto 0 generate
-		propagate_0(i) <= a(i) xor b(i);
-		generate_0(i) <= a(i) and b(i);
+		propagate_0(i) <= a(i) xor b(i);	-- sum per digit place
+		generate_0(i) <= a(i) and b(i);		-- carry per digit place
 	end generate row_0;
 	
-	-- row_1
+	-- row 1
 	row_1: for i in 7 downto 1 generate
 		propagate_1(i) <= propagate_0(i) and propagate_0(i - 1);
 		generate_1(i) <= (propagate_0(i) and generate_0(i - 1)) or generate_0(i);
@@ -230,7 +230,7 @@ begin
 	propagate_1(0) <= propagate_0(0);
 	generate_1(0) <= generate_0(0);
 	
-	-- row_2:
+	-- row 2:
 	row_2_1: for i in 7 downto 2 generate
 		propagate_2(i) <= propagate_1(i) and propagate_1(i - 2);
 		generate_2(i) <= (propagate_1(i) and generate_1(i - 2)) or generate_1(i);
@@ -240,7 +240,7 @@ begin
 		generate_2(i) <= generate_1(i);
 	end generate row_2_2;
 	
-	-- row_3:
+	-- row 3:
 	row_3_1: for i in 7 downto 4 generate
 		propagate_3(i) <= propagate_2(i) and propagate_2(i - 4);
 		generate_3(i) <= (propagate_2(i) and generate_2(i - 4)) or generate_2(i);
@@ -250,7 +250,7 @@ begin
 		generate_3(i) <= generate_2(i);
 	end generate row_3_2;
 	
-	-- row_4:
+	-- row 4:
 	propagate_4(7) <= propagate_3(7) and propagate_3(0);
 	generate_4(7) <= (propagate_3(7) and generate_3(0)) or generate_3(7);
 	row_4_2: for i in 6 downto 0 generate
