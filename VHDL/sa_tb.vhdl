@@ -28,6 +28,14 @@ architecture test of sa_tb is
 
 	signal c, r: std_logic;
 	signal d: std_2d_vector_array(0 to array_size-1, 0 to array_size-1);
+	signal outputVector1: std_logic_vector(7 downto 0);
+	signal outputVector2: std_logic_vector(7 downto 0);
+	signal outputVector3: std_logic_vector(7 downto 0);
+	signal outputVector4: std_logic_vector(7 downto 0);
+	signal outputVector5: std_logic_vector(7 downto 0);
+	signal outputVector6: std_logic_vector(7 downto 0);
+	signal outputVector7: std_logic_vector(7 downto 0);
+	signal outputVector8: std_logic_vector(7 downto 0);
 	
 begin
     sa1: sa generic map(systolicArraySize=>array_size, bitSize=>8)port map(upperInputVectors => a, leftInputVectors => b, clk => c, reset => r, outMatrix => d);
