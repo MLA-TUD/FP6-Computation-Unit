@@ -5,9 +5,11 @@ use ieee.numeric_std.all;
 
 entity matrix_multiplier is	
     generic (
-        maxMatrixSize : integer := 8
+        maxMatrixSize : integer := 8;
+        bitSize : integer := 8;
     );
-	port (		
+	port (	
+        clk : in std_logic;	
         a : in std_logic_vector((bitSize - 1) downto 0);	
 		b : in std_logic_vector((bitSize - 1) downto 0);	
         eq : out std_logic
@@ -66,8 +68,21 @@ architecture behavior of matrix_multiplier is
     end component comparator;
 
     component 
-    
+
+
+    signal a, b: std_1d_vector_array(0 to array_size-1)  ;
+	signal c, r: std_logic;
+	signal d: std_2d_vector_array(0 to array_size-1, 0 to array_size-1);
 begin
-	
+    sa1: sa generic map(systolicArraySize=>maxMatrixSize, bitSize=>bitSize)port map(a => a, b => b, c => c, r => r, d => d);
+    regSize : reg generic map(bitSize=>bitSize)port map();
+    counter1 : counter generic map(bitSize=>24)
+    demux1 : demux generic map(bitSize=>bitSize)port map(x=>'1', s=>, q=>)
+	gen1 : FOR i IN 0 TO maxMatrixSize-1 GENERATE
+		reg1 : reg generic map(bitSize=>bitSize)port map();
+		
+		
+		
+	END GENERATE;
 	
 end behavior;
