@@ -8,7 +8,7 @@ end pipo_tb;
 architecture testbench of pipo_tb is
 	
 	component pipo is	-- parallel-in parallel-out (8-Bit Register)
-		port (			-- c: clock; r: reset
+		port (
 			a : in std_logic_vector(7 downto 0);	-- input: 8-bit data (to save)
 			c : in std_logic;						-- clock
 			r : in std_logic;						-- reset (to "00000000")
@@ -22,8 +22,8 @@ architecture testbench of pipo_tb is
 begin
     reg: pipo port map(c => c, r => r, a => a, b => b);
 	
-    process begin	-- for repeating the clock signal	(until 100 ns)
-        forloopc: for i in 10 downto 0 loop
+    process begin	-- for repeating the clock signal	(until 150 ns)
+        forloopc: for i in 15 downto 0 loop
             c <= '0';
             wait for 5 ns;
             c <= '1';
@@ -33,6 +33,10 @@ begin
     end process;
     
     process begin	-- for testing (the data)
+		r <= '1';
+		wait for 10 ns;		-- reset: b="00000000"
+		r <= '0';
+		wait for 10 ns;
         a <= "00010001";
         wait for 20 ns;		-- b="00010001"
         a <= "00100001";

@@ -6,12 +6,12 @@ end fa_tb;
 
 architecture test of fa_tb is
 	component fa is		-- full adder
-		port (			-- s: sum; c: carry
-			a : in std_logic;		-- input: 1
-			b : in std_logic;		-- input: 2
-			c_in : in std_logic;	-- input: 3 (carry)
-			s : out std_logic;		-- output: sum
-			c_out : out std_logic	-- output: carry
+		port (
+			a : in std_logic;		-- input 1: bit
+			b : in std_logic;		-- input 2: bit
+			c_in : in std_logic;	-- input 3 (carry): bit
+			s : out std_logic;		-- output sum: bit
+			c_out : out std_logic	-- output carry: bit
 		);
 	end component fa;
 	
