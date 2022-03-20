@@ -28,27 +28,9 @@ architecture test of sa_tb is
 
 	signal c, r: std_logic;
 	signal d: std_2d_vector_array(0 to array_size-1, 0 to array_size-1);
-	signal outputVector1: std_logic_vector(7 downto 0);
-	signal outputVector2: std_logic_vector(7 downto 0);
-	signal outputVector3: std_logic_vector(7 downto 0);
-	signal outputVector4: std_logic_vector(7 downto 0);
-	signal outputVector5: std_logic_vector(7 downto 0);
-	signal outputVector6: std_logic_vector(7 downto 0);
-	signal outputVector7: std_logic_vector(7 downto 0);
-	signal outputVector8: std_logic_vector(7 downto 0);
 	
 begin
     sa1: sa generic map(systolicArraySize=>array_size, bitSize=>8)port map(upperInputVectors => a, leftInputVectors => b, clk => c, reset => r, outMatrix => d);
-    
-    outputVector1 <= getVectored2D(d, 0, 0);
-    outputVector2 <= getVectored2D(d, 1, 1);
-    outputVector3 <= getVectored2D(d, 2, 2);
-    outputVector4 <= getVectored2D(d, 3, 3);
-    outputVector5 <= getVectored2D(d, 4, 4);
-    outputVector6 <= getVectored2D(d, 5, 5);
-    outputVector7 <= getVectored2D(d, 6, 6);
-    outputVector8 <= getVectored2D(d, 7, 7);
-
 	
 	process begin
         forloopc: for i in 100 downto 0 loop	-- for repeating the clock signal	(until 1000 ns)
