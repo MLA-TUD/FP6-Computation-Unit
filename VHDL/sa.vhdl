@@ -12,10 +12,10 @@ entity sa is	-- systolic array
     );    
 	port (
 		upperInputVectors : in std_1d_vector_array(0 to systolicArraySize-1);		-- input 1: (top)	1-dimensional array of: 8-bit signed (2k) data
-        leftInputVectors : in std_1d_vector_array(0 to systolicArraySize-1);		-- input 2: (left)	1-dimensional array of: 8-bit signed (2k) data
-        clk : in std_logic;                                                         -- clock
-        reset : in std_logic;                                                       -- reset (each cell (-> d) to "00000000")
-        outMatrix : out std_2d_vector_array(0 to systolicArraySize-1, 0 to systolicArraySize-1)   -- output: (back)	2-dimensional array of: 8-bit signed (2k) data
+        	leftInputVectors : in std_1d_vector_array(0 to systolicArraySize-1);		-- input 2: (left)	1-dimensional array of: 8-bit signed (2k) data
+        	clk : in std_logic;                                                         				-- clock
+        	reset : in std_logic;                                                       				-- reset (each cell (-> d) to "00000000")
+        	outMatrix : out std_2d_vector_array(0 to systolicArraySize-1, 0 to systolicArraySize-1)  		 -- output: (back)	2-dimensional array of: 8-bit signed (2k) data
 	);
 end sa;
 
