@@ -5,7 +5,10 @@ library ieee;
 use ieee.std_logic_1164.all;
 
 entity sa is	-- systolic array
-	generic (systolic_Array_Size:integer := 8);		-- for setting the size of the calculation matrix
+	generic (
+		systolicArraySize:integer := 8;		-- for setting the size of the calculation matrix
+		bitSize:integer := 8				-- fixed to 8 for this project
+		);
 	port (
 		a : in std_1d_vector_array(0 to array_size-1);						-- input 1: (top)	1-dimensional array of: 8-bit signed (2k) data
 		b : in std_1d_vector_array(0 to array_size-1);						-- input 2: (left)	1-dimensional array of: 8-bit signed (2k) data
