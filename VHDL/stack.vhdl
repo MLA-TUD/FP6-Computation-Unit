@@ -21,16 +21,14 @@ entity stack is
 end stack;
 
 architecture behavior of stack is
-type stackMem is array(1 to stackSize) of std_logic_vector(bit_size-1 downto 0);
-signal addr: natural range 0 to stackSize-1;
+type stackMem is array(0 to stackSize) of std_logic_vector(bitSize-1 downto 0);
+signal addr:integer :=0;
 signal memory:stackMem;
 begin
-	process(n_reset) begin
+	process(pop,push,n_reset) begin
 		if(n_reset='0')then
 			addr<=0;
 		end if;
-	end process;
-	process(pop,push) begin
 		if rising_edge(pop) then
 			if addr=0 then
 				q <= (others => '0');	
@@ -44,7 +42,7 @@ begin
 			full <= '0';
 		end if;
 		if rising_edge(push) then
-			if addr/=stackSize then
+			if addr<stackSize then
 				addr <= addr+1;
 				memory(addr) <= d;
 				if addr = stackSize then
