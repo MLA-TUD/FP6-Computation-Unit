@@ -5,7 +5,7 @@ use ieee.numeric_std.all;
 
 entity matrix_multiplier is	
     generic (
-        bitSize : integer := 8
+        maxMatrixSize : integer := 8
     );
 	port (		
         a : in std_logic_vector((bitSize - 1) downto 0);	
@@ -64,16 +64,10 @@ architecture behavior of matrix_multiplier is
         eq : out std_logic
 	);
     end component comparator;
+
+    component 
     
 begin
-	process(a,b) begin
-        tmp <= '1';
-		for i in 0 to (bitSize - 1) loop
-		    if a(i) /= b(i) then --They are different
-                tmp <= '0';
-            end if;
-	    end loop;
-	    eq <= tmp;
-	end process;
+	
 	
 end behavior;

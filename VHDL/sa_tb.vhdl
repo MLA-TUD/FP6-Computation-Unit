@@ -14,11 +14,11 @@ architecture test of sa_tb is
 	component sa is -- systolic array
         generic (systolicArraySize:integer := 8;bitSize:integer := 8);
         port ( -- c: clock; r: reset
-            a : in std_1d_vector_array(0 to array_size-1); -- upper side
-            b : in std_1d_vector_array(0 to array_size-1); -- left side
-            c : in std_logic;
-            r : in std_logic;
-            d : out std_2d_vector_array(0 to array_size-1, 0 to array_size-1)
+            upperInputVectors : in std_1d_vector_array(0 to array_size-1); -- upper side
+            leftInputVectors : in std_1d_vector_array(0 to array_size-1); -- left side
+            clk : in std_logic;
+            reset : in std_logic;
+            outMatrix : out std_2d_vector_array(0 to array_size-1, 0 to array_size-1)
         );
     end component;
 
@@ -39,7 +39,7 @@ architecture test of sa_tb is
 	
 begin
 
-    sa1: sa generic map(systolicArraySize=>array_size, bitSize=>8)port map(a => a, b => b, c => c, r => r, d => d);
+    sa1: sa generic map(systolicArraySize=>array_size, bitSize=>8)port map(upperInputVectors => a, leftInputVectors => b, clk => c, reset => r, outMatrix => d);
     
     
     
