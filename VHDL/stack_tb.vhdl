@@ -12,7 +12,7 @@ architecture test of stack_tb is
         generic(
         	bitSize : integer := 8;
         	stackSize : integer := 4
-   	);
+		);
     	port(
        		d  : in  std_logic_vector(bitSize - 1 downto 0); 
         	q  : out std_logic_vector(bitSize - 1 downto 0);
@@ -54,5 +54,6 @@ begin
 		clk <= '1';wait for 10 ns;clk <= '0';wait for 10 ns;
 		clk <= '1';wait for 10 ns;clk <= '0';wait for 10 ns;
 		clk <= '1';wait for 10 ns;clk <= '0';wait for 10 ns;
+		wait;
 	end process;
 end test;
