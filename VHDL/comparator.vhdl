@@ -4,13 +4,13 @@ use ieee.numeric_std.all;
 
 
 entity comparator is	
-    generic (
-        bitSize : integer := 8
-    );
+    	generic (
+        	bitSize : integer := 8
+    	);
 	port (		
-        a : in std_logic_vector((bitSize - 1) downto 0);	
+        	a : in std_logic_vector((bitSize - 1) downto 0);	
 		b : in std_logic_vector((bitSize - 1) downto 0);	
-        eq : out std_logic
+        	eq : out std_logic
 	);
 end comparator;
 
