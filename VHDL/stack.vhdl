@@ -1,56 +1,64 @@
-library work;
-use work.array_vector_package.all;
-
 library ieee;
 use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
 
-entity stack is	
-    generic (
-        stackSize : integer := 8;
-        bitSize : integer := 8
+entity stack is
+    generic(
+        bitSize : integer := 8;
+        stackSize : integer := 4
     );
-	port (		
-		d : in std_logic_vector((bitSize - 1) downto 0);	
-		push : in std_logic;
-		pop : in std_logic;	
-		n_reset : in std_logic;
-        	empty : out std_logic;
-		full : out std_logic;
-		q : out std_logic_vector((bitSize - 1) downto 0)	
-	);
-end stack;
+    port(
+        d  : in  std_logic_vector(bitSize - 1 downto 0); 
+        q  : out std_logic_vector(bitSize - 1 downto 0);
+        bar_push_pop : in  std_logic; 
+        full  : out std_logic; 
+        empty : out std_logic; 
+        clk     : in  std_logic;
+        rst     : in  std_logic
+    );
+end entity stack;
 
-architecture behavior of stack is
-type stackMem is array(0 to stackSize) of std_logic_vector(bitSize-1 downto 0);
-signal addr:integer :=0;
-signal memory:stackMem;
+architecture arch of stack is
+    
+
+    	type memory_type is array (0 to stackSize - 1) of std_logic_vector(bitSize - 1 downto 0);
+   	signal memory : memory_type;
 begin
-	process(pop,push,n_reset) begin
-		if(n_reset='0')then
-			addr<=0;
-		end if;
-		if rising_edge(pop) then
-			if addr=0 then
-				q <= (others => '0');	
-			else 
-				q <= memory(addr);
-				addr <= addr-1;
-				if addr = 0 then
-					empty <= '1';
-				end if;
-			end if;
-			full <= '0';
-		end if;
-		if rising_edge(push) then
-			if addr<stackSize then
-				addr <= addr+1;
-				memory(addr) <= d;
-				if addr = stackSize then
-					full <= '1';
-				end if;
-			end if;
-			empty <= '0';
-		end if;
-	end process;
-	
-end behavior;
+    main : process(clk, rst) is
+        variable stack_pointer : integer range 0 to stackSize := stackSize;
+    begin
+        if rst = '1' then
+            	empty <= '1';
+            	full  <= '0';
+            	stack_pointer := stackSize;
+        elsif rising_edge(clk) then
+            	if bar_push_pop = '1' then --pop
+                	if stack_pointer < stackSize then
+                    		q <= memory(stack_pointer);
+                    		stack_pointer := stack_pointer + 1;
+			else
+				q <= (others => '0');
+                	end if;
+            	else  --push
+                	if stack_pointer > 0 then
+                    		stack_pointer := stack_pointer - 1;
+                    		memory(stack_pointer) <= d;
+				q <= d;
+                	end if;
+            	end if;
+
+
+            	if stack_pointer = stackSize then
+               		empty <= '1';
+            	else
+                	empty <= '0';
+            	end if;
+            	if stack_pointer = 0 then
+                	full <= '1';
+            	else
+                	full <= '0';
+            	end if;
+        end if;
+    end process main;
+
+end architecture arch;
