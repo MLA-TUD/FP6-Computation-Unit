@@ -8,7 +8,7 @@ entity stack_filler is
 	generic(
 		bitSize:integer := 8;
 		counterSize:integer := 24;
-		systolicArraySize:integer :=8
+		stackSize:integer :=8
 	);
 	port(
 		fifoIn : in std_logic_vector((bitSize-1) downto 0);
@@ -101,7 +101,7 @@ begin
 	and2 : and_gate_three port map(a=>clk,b=>counter1NotStopped,c=>en,o=>andOut2);
 	and3 : and_gate_three port map(a=>clk,b=>counter2NotStopped,c=>en,o=>andOut3);
 	or1 : or_gate_three port map(a=>andOut1,b=>andOut2,c=>andOut3,o=>orOut);
-	stack1 : stack generic map(bitSize=>bitSize,stackSize=>2*systolicArraySize-1) port map(d=>muxOut,q=>saIn,bar_push_pop=>rd,full=>stackFull,empty=>stackEmpty,clk=>orOut,rst=>rst);
+	stack1 : stack generic map(bitSize=>bitSize,stackSize=>stackSize) port map(d=>muxOut,q=>saIn,bar_push_pop=>rd,full=>stackFull,empty=>stackEmpty,clk=>orOut,rst=>rst);
 	enNxt <= counter1Stopped;
 	rdy <=	counter2Stopped and counter1Stopped;
 

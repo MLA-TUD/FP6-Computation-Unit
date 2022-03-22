@@ -30,7 +30,7 @@ architecture behaviour of sa_filler is
         generic(
 		bitSize:integer := 8;
 		counterSize:integer := 24;
-		systolicArraySize:integer :=8
+		stackSize:integer :=8
 	);
 	port(
 		fifoIn : in std_logic_vector((bitSize-1) downto 0);
@@ -66,7 +66,7 @@ begin
 		lower_bit: if i/=0 generate
 	      		en(i)<=enNxt(i-1);
     		end generate lower_bit;
-		stack_filler1 : stack_filler generic map(bitSize=>bitSize,counterSize=>counterSize,systolicArraySize=>systolicArraySize) port map(fifoIn=>fifoOut,clk=>clk,rst=>rst,en=>en(i),rd=>r_bar_w,regSize=>regSize,numZeros=>numZeros(i),enNxt=>enNxt(i),saIn=>saIn(i),rdy=>rdys(i));
+		stack_filler1 : stack_filler generic map(bitSize=>bitSize,counterSize=>counterSize,stackSize=>(2*systolicArraySize)-1) port map(fifoIn=>fifoOut,clk=>clk,rst=>rst,en=>en(i),rd=>r_bar_w,regSize=>regSize,numZeros=>numZeros(i),enNxt=>enNxt(i),saIn=>saIn(i),rdy=>rdys(i));
 	END GENERATE;
 	rdy<=rdys(systolicArraySize-1);
 
