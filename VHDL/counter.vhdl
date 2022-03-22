@@ -24,7 +24,7 @@ begin
 		end if;
 		if rising_edge(clk) then
                 	tmp <= std_logic_vector(to_unsigned(to_integer(unsigned( tmp )) + 1, bitSize));
-			q <= tmp;
+			q <= std_logic_vector(to_unsigned(to_integer(unsigned( tmp )) + 1, bitSize));
             	end if;
 	end process;
 	

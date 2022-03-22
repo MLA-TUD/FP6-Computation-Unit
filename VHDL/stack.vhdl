@@ -21,21 +21,23 @@ end entity stack;
 architecture arch of stack is
     
 
-    	type memory_type is array (0 to stackSize - 1) of std_logic_vector(bitSize - 1 downto 0);
+    	type memory_type is array (0 to stackSize) of std_logic_vector(bitSize - 1 downto 0);
    	signal memory : memory_type;
 begin
     main : process(clk, rst) is
         variable stack_pointer : integer range 0 to stackSize := stackSize;
     begin
         if rst = '1' then
+		memory <= (others => (others => '0'));
             	empty <= '1';
             	full  <= '0';
             	stack_pointer := stackSize;
         elsif rising_edge(clk) then
             	if bar_push_pop = '1' then --pop
                 	if stack_pointer < stackSize then
-                    		q <= memory(stack_pointer);
+                    		
                     		stack_pointer := stack_pointer + 1;
+				q <= memory(stack_pointer);
 			else
 				q <= (others => '0');
                 	end if;
@@ -50,6 +52,7 @@ begin
 
             	if stack_pointer = stackSize then
                		empty <= '1';
+			q <= (others => '0');
             	else
                 	empty <= '0';
             	end if;
