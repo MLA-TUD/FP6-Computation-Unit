@@ -77,5 +77,6 @@ begin
 		stack_filler1 : stack_filler generic map(bitSize=>bitSize,counterSize=>counterSize,stackSize=>(2*systolicArraySize)-1) port map(valIn=>fifoOut,clk=>clk,rst=>rst,en=>en(i),rd=>r_bar_w,numVals=>numVals,numZeros=>numZeros(i),enNxt=>enNxt(i),valOut=>saIn(i),rdy=>rdys(i));
 	END GENERATE;
 	rdy <= rdys(to_integer(unsigned(numVals)-1));
+	rinc <= (not rdys(to_integer(unsigned(numVals)-1))) and (not r_bar_w);
 
 end behaviour;
