@@ -51,6 +51,10 @@ begin
 		clk <= '1';wait for 10 ns;clk <= '0';wait for 10 ns;
 		fifoOut <= "00000100";
 		clk <= '1';wait for 10 ns;clk <= '0';wait for 10 ns;
+		clk <= '1';wait for 10 ns;clk <= '0';wait for 10 ns;
+		clk <= '1';wait for 10 ns;clk <= '0';wait for 10 ns;
+		clk <= '1';wait for 10 ns;clk <= '0';wait for 10 ns;
+		clk <= '1';wait for 10 ns;clk <= '0';wait for 10 ns;
 		r_bar_w <= '1';
 		clk <= '1';wait for 10 ns;clk <= '0';wait for 10 ns;
 		clk <= '1';wait for 10 ns;clk <= '0';wait for 10 ns;
