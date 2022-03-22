@@ -11,15 +11,15 @@ entity stack_filler is
 		stackSize:integer :=8
 	);
 	port(
-		fifoIn : in std_logic_vector((bitSize-1) downto 0);
+		valIn : in std_logic_vector((bitSize-1) downto 0);
 		clk : in std_logic;
 		rst : in std_logic;
 		en : in std_logic;
 		rd : in std_logic;
-		regSize : in std_logic_vector((counterSize-1) downto 0);
+		numVals : in std_logic_vector((counterSize-1) downto 0);
 		numZeros : in std_logic_vector((counterSize-1) downto 0);
 		enNxt : out std_logic;
-		saIn : out std_logic_vector((bitSize-1) downto 0);
+		valOut : out std_logic_vector((bitSize-1) downto 0);
 		rdy : out std_logic
 	);
 end stack_filler;
@@ -93,15 +93,15 @@ signal zeros:std_logic_vector((bitSize-1) downto 0) := (others => '0');
 signal muxOut:std_logic_vector((bitSize-1) downto 0);
 
 begin
-	while_counter1 : while_counter generic map(counterSize=>counterSize) port map(clk=>clk,en=>en,rst=>rst,countUntil=>regSize,stopped=>counter1Stopped,not_stopped=>counter1NotStopped);
+	while_counter1 : while_counter generic map(counterSize=>counterSize) port map(clk=>clk,en=>en,rst=>rst,countUntil=>numVals,stopped=>counter1Stopped,not_stopped=>counter1NotStopped);
 	while_counter2 : while_counter generic map(counterSize=>counterSize) port map(clk=>clk,en=>counter1Stopped,rst=>rst,countUntil=>numZeros,stopped=>counter2Stopped,not_stopped=>counter2NotStopped);
-	mux1 : n_bit_mux_two_one generic map(bitSize=>bitSize) port map(a=>fifoIn,b=>zeros,s=>counter1Stopped,o=>muxOut);
+	mux1 : n_bit_mux_two_one generic map(bitSize=>bitSize) port map(a=>valIn,b=>zeros,s=>counter1Stopped,o=>muxOut);
 	
 	and1 : and_gate_two port map(a=>clk,b=>rd,o=>andOut1);
 	and2 : and_gate_three port map(a=>clk,b=>counter1NotStopped,c=>en,o=>andOut2);
 	and3 : and_gate_three port map(a=>clk,b=>counter2NotStopped,c=>en,o=>andOut3);
 	or1 : or_gate_three port map(a=>andOut1,b=>andOut2,c=>andOut3,o=>orOut);
-	stack1 : stack generic map(bitSize=>bitSize,stackSize=>stackSize) port map(d=>muxOut,q=>saIn,bar_push_pop=>rd,full=>stackFull,empty=>stackEmpty,clk=>orOut,rst=>rst);
+	stack1 : stack generic map(bitSize=>bitSize,stackSize=>stackSize) port map(d=>muxOut,q=>valOut,bar_push_pop=>rd,full=>stackFull,empty=>stackEmpty,clk=>orOut,rst=>rst);
 	enNxt <= counter1Stopped;
 	rdy <=	counter2Stopped and counter1Stopped;
 

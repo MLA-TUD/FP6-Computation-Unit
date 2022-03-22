@@ -13,7 +13,7 @@ entity sa_filler is
 		counterSize : integer := 24
 	);
 	port (
-		regSize : in std_logic_vector ((counterSize-1) downto 0);
+		numVals : in std_logic_vector ((counterSize-1) downto 0);
 		clk : in std_logic;
 		r_bar_w : in std_logic;
 		rst : in std_logic;
@@ -33,15 +33,15 @@ architecture behaviour of sa_filler is
 		stackSize:integer :=8
 	);
 	port(
-		fifoIn : in std_logic_vector((bitSize-1) downto 0);
+		valIn : in std_logic_vector((bitSize-1) downto 0);
 		clk : in std_logic;
 		rst : in std_logic;
 		en : in std_logic;
 		rd : in std_logic;
-		regSize : in std_logic_vector((counterSize-1) downto 0);
+		numVals : in std_logic_vector((counterSize-1) downto 0);
 		numZeros : in std_logic_vector((counterSize-1) downto 0);
 		enNxt : out std_logic;
-		saIn : out std_logic_vector((bitSize-1) downto 0);
+		valOut : out std_logic_vector((bitSize-1) downto 0);
 		rdy : out std_logic
 	);
     	end component stack_filler;
@@ -62,11 +62,11 @@ begin
 	en(0) <= not r_bar_w;
 	and1 : and_gate_two port map(a=>en(0),b=>rdys(systolicArraySize-1),o=>rinc);
 	gen1 : FOR i IN 0 TO systolicArraySize-1 GENERATE
-		numZeros(i)<=std_logic_vector(to_unsigned(i, counterSize));
+		numZeros(i)<=std_logic_vector(to_unsigned(i+1, counterSize));
 		lower_bit: if i/=0 generate
 	      		en(i)<=enNxt(i-1);
     		end generate lower_bit;
-		stack_filler1 : stack_filler generic map(bitSize=>bitSize,counterSize=>counterSize,stackSize=>(2*systolicArraySize)-1) port map(fifoIn=>fifoOut,clk=>clk,rst=>rst,en=>en(i),rd=>r_bar_w,regSize=>regSize,numZeros=>numZeros(i),enNxt=>enNxt(i),saIn=>saIn(i),rdy=>rdys(i));
+		stack_filler1 : stack_filler generic map(bitSize=>bitSize,counterSize=>counterSize,stackSize=>(2*systolicArraySize)-1) port map(valIn=>fifoOut,clk=>clk,rst=>rst,en=>en(i),rd=>r_bar_w,numVals=>numVals,numZeros=>numZeros(i),enNxt=>enNxt(i),valOut=>saIn(i),rdy=>rdys(i));
 	END GENERATE;
 	rdy<=rdys(systolicArraySize-1);
 

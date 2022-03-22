@@ -15,7 +15,7 @@ architecture test of sa_filler_tb is
 		counterSize : integer := 24
 	);
 	port (
-		regSize : in std_logic_vector ((counterSize-1) downto 0);
+		numVals : in std_logic_vector ((counterSize-1) downto 0);
 		clk : in std_logic;
 		r_bar_w : in std_logic;
 		rst : in std_logic;
@@ -28,17 +28,17 @@ architecture test of sa_filler_tb is
 
     
 signal clk, r_bar_w,rst,rinc,rdy:std_logic;
-signal regSize:std_logic_vector((8-1) downto 0);
+signal numVals:std_logic_vector((8-1) downto 0);
 signal fifoOut:std_logic_vector((8-1) downto 0);	
 signal saIn:std_1d_vector_array(0 to 8-1);
 begin
-    sa_filler1: sa_filler generic map(systolicArraySize=>8, bitSize=>8, counterSize=>8)port map(regSize=>regSize,clk=>clk,r_bar_w=>r_bar_w,rst=>rst,fifoOut=>fifoOut,rinc=>rinc,rdy=>rdy,saIn=>saIn);
+    sa_filler1: sa_filler generic map(systolicArraySize=>8, bitSize=>8, counterSize=>8)port map(numVals=>numVals,clk=>clk,r_bar_w=>r_bar_w,rst=>rst,fifoOut=>fifoOut,rinc=>rinc,rdy=>rdy,saIn=>saIn);
     
 	process begin
 		clk <= '0';
 		r_bar_w <= '0';
 		rst <= '1';
-		regSize <= "00000010";
+		numVals <= "00000010";
 		fifoOut <= "00000000";
 		wait for 10 ns;
 		rst <= '0';
