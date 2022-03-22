@@ -25,6 +25,14 @@ entity sa_filler is
 end sa_filler;
 
 architecture behaviour of sa_filler is
+function To_Std_Logic(L: BOOLEAN) return std_ulogic is
+	begin
+		if L then
+			return('1');
+		else
+			return('0');
+		end if;
+	end function To_Std_Logic;
 ---------------------------------------
 	component stack_filler is
         generic(
@@ -64,10 +72,11 @@ begin
 	gen1 : FOR i IN 0 TO systolicArraySize-1 GENERATE
 		numZeros(i)<=std_logic_vector(to_unsigned(i+1, counterSize));
 		lower_bit: if i/=0 generate
-	      		en(i)<=enNxt(i-1);
+	      		en(i)<=enNxt(i-1) and To_Std_Logic((i)<to_integer(unsigned(numVals)));
     		end generate lower_bit;
 		stack_filler1 : stack_filler generic map(bitSize=>bitSize,counterSize=>counterSize,stackSize=>(2*systolicArraySize)-1) port map(valIn=>fifoOut,clk=>clk,rst=>rst,en=>en(i),rd=>r_bar_w,numVals=>numVals,numZeros=>numZeros(i),enNxt=>enNxt(i),valOut=>saIn(i),rdy=>rdys(i));
 	END GENERATE;
-	rdy<=rdys(systolicArraySize-1);
+	rdy <= rdys(to_integer(unsigned(numVals)-1));-- when (to_integer(unsigned(numVals))-1 < systolicArraySize) else others => '0';
+	--rdy<=rdys(to_integer(unsigned(numVals))-2);
 
 end behaviour;

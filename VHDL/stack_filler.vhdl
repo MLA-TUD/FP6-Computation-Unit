@@ -58,6 +58,13 @@ architecture behaviour of stack_filler is
 	);
 	end component or_gate_three;
 ---------------------------------------
+	component or_gate_two is
+	port (
+        	a,b : in std_logic;
+        	o : out std_logic	
+	);
+	end component or_gate_two;
+---------------------------------------
 	component and_gate_two is
 	port (		
         	a,b : in std_logic;
@@ -83,12 +90,13 @@ architecture behaviour of stack_filler is
         	bar_push_pop : in  std_logic; 
         	full  : out std_logic; 
         	empty : out std_logic; 
+		en 	: in std_logic;
         	clk     : in  std_logic;
         	rst     : in  std_logic
-   	);
+    	);
 	end component;
 	
-signal counter1Stopped, counter1NotStopped, counter2Stopped, counter2NotStopped, orOut, andOut1,andOut2,andOut3, stackEmpty, stackFull:std_logic;
+signal counter1Stopped, counter1NotStopped, counter2Stopped, counter2NotStopped, orOut1, orOut2, andOut1,andOut2,andOut3, stackEmpty, stackFull:std_logic;
 signal zeros:std_logic_vector((bitSize-1) downto 0) := (others => '0');
 signal muxOut:std_logic_vector((bitSize-1) downto 0);
 
@@ -98,10 +106,11 @@ begin
 	mux1 : n_bit_mux_two_one generic map(bitSize=>bitSize) port map(a=>valIn,b=>zeros,s=>counter1Stopped,o=>muxOut);
 	
 	and1 : and_gate_two port map(a=>clk,b=>rd,o=>andOut1);
-	and2 : and_gate_three port map(a=>clk,b=>counter1NotStopped,c=>en,o=>andOut2);
-	and3 : and_gate_three port map(a=>clk,b=>counter2NotStopped,c=>en,o=>andOut3);
-	or1 : or_gate_three port map(a=>andOut1,b=>andOut2,c=>andOut3,o=>orOut);
-	stack1 : stack generic map(bitSize=>bitSize,stackSize=>stackSize) port map(d=>muxOut,q=>valOut,bar_push_pop=>rd,full=>stackFull,empty=>stackEmpty,clk=>orOut,rst=>rst);
+	and2 : and_gate_two port map(a=>clk,b=>counter1NotStopped,o=>andOut2);
+	and3 : and_gate_two port map(a=>clk,b=>counter2NotStopped,o=>andOut3);
+	or1 : or_gate_three port map(a=>andOut1,b=>andOut2,c=>andOut3,o=>orOut1);
+	or2 : or_gate_two port map(a=>en,b=>rd,o=>orOut2);
+	stack1 : stack generic map(bitSize=>bitSize,stackSize=>stackSize) port map(d=>muxOut,q=>valOut,bar_push_pop=>rd,full=>stackFull,empty=>stackEmpty,en=>orOut2,clk=>orOut1,rst=>rst);
 	enNxt <= counter1Stopped;
 	rdy <=	counter2Stopped and counter1Stopped;
 

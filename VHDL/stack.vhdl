@@ -13,6 +13,7 @@ entity stack is
         bar_push_pop : in  std_logic; 
         full  : out std_logic; 
         empty : out std_logic; 
+	en 	: in std_logic;
         clk     : in  std_logic;
         rst     : in  std_logic
     );
@@ -32,7 +33,9 @@ begin
             	empty <= '1';
             	full  <= '0';
             	stack_pointer := stackSize;
+		q <= (others => '0');
         elsif rising_edge(clk) then
+	    if en = '1' then
             	if bar_push_pop = '1' then --pop
                 	if stack_pointer < stackSize then
                     		
@@ -61,6 +64,7 @@ begin
             	else
                 	full <= '0';
             	end if;
+	    end if;
         end if;
     end process main;
 

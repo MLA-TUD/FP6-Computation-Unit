@@ -12,25 +12,27 @@ architecture test of stack_tb is
         generic(
         	bitSize : integer := 8;
         	stackSize : integer := 4
-		);
+    	);
     	port(
-       		d  : in  std_logic_vector(bitSize - 1 downto 0); 
+        	d  : in  std_logic_vector(bitSize - 1 downto 0); 
         	q  : out std_logic_vector(bitSize - 1 downto 0);
         	bar_push_pop : in  std_logic; 
         	full  : out std_logic; 
         	empty : out std_logic; 
+		en 	: in std_logic;
         	clk     : in  std_logic;
         	rst     : in  std_logic
     	);
     	end component stack;
     
 	signal d,q: std_logic_vector(7 downto 0)  ;
-	signal bar_push_pop, rst, clk, empty, full: std_logic;
+	signal bar_push_pop, rst, clk, en, empty, full: std_logic;
 	
 begin
-    stack1: stack generic map(stackSize=>4, bitSize=>8)port map(d => d, q => q, bar_push_pop => bar_push_pop, full => full, empty => empty, clk => clk, rst => rst);
+    stack1: stack generic map(stackSize=>4, bitSize=>8)port map(d => d, q => q, bar_push_pop => bar_push_pop, full => full, empty => empty, en=>en, clk => clk, rst => rst);
     
 	process begin
+		en <= '1';
 		clk <= '0';
 		bar_push_pop <= '0';
 		rst <= '1';
