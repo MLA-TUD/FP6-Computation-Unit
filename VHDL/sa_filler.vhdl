@@ -61,14 +61,21 @@ function To_Std_Logic(L: BOOLEAN) return std_ulogic is
 	);
 	end component and_gate_two;
 ---------------------------------------
+	component not_gate is
+	port (		
+        	a : in std_logic;
+        	o : out std_logic	
+	);
+	end component not_gate;
+---------------------------------------
 type array_std_logic_vector is array(0 to systolicArraySize-1) of std_logic_vector((counterSize-1) downto 0);
 signal rdys,en,enNxt : std_logic_vector(0 to (systolicArraySize-1));
 signal addressSize:integer;
 signal numZeros : array_std_logic_vector;
+signal tmpRdy:std_logic;
 begin
 	addressSize <= integer(ceil(log2(real(systolicArraySize**2))));
 	en(0) <= not r_bar_w;
-	and1 : and_gate_two port map(a=>en(0),b=>rdys(systolicArraySize-1),o=>rinc);
 	gen1 : FOR i IN 0 TO systolicArraySize-1 GENERATE
 		numZeros(i)<=std_logic_vector(to_unsigned(i+1, counterSize));
 		lower_bit: if i/=0 generate
@@ -77,6 +84,6 @@ begin
 		stack_filler1 : stack_filler generic map(bitSize=>bitSize,counterSize=>counterSize,stackSize=>(2*systolicArraySize)-1) port map(valIn=>fifoOut,clk=>clk,rst=>rst,en=>en(i),rd=>r_bar_w,numVals=>numVals,numZeros=>numZeros(i),enNxt=>enNxt(i),valOut=>saIn(i),rdy=>rdys(i));
 	END GENERATE;
 	rdy <= rdys(to_integer(unsigned(numVals)-1));
-	rinc <= (not rdys(to_integer(unsigned(numVals)-1))) and (not r_bar_w);
+	rinc <= (not enNxt(to_integer(unsigned(numVals)-1))) and (not r_bar_w);
 
 end behaviour;
