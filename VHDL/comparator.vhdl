@@ -17,14 +17,16 @@ end comparator;
 architecture behavior of comparator is
 signal tmp : std_logic;
 begin
-	process(a,b) begin
-        tmp <= '1';
-		for i in 0 to (bitSize - 1) loop
-		    if a(i) /= b(i) then --They are different
-                tmp <= '0';
-            end if;
-	    end loop;
-	    eq <= tmp;
-	end process;
+
+	eq <= '1' when a = b else '0';
+	--process(a,b) begin
+        --	tmp <= '1';
+	--	for i in 0 to (bitSize - 1) loop
+	--	    if a(i) /= b(i) then --They are different
+        --        	tmp <= '0';
+          --  		end if;
+	  --  	end loop;
+	  --  	eq <= tmp;
+	--end process;
 	
 end behavior;

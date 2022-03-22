@@ -65,6 +65,13 @@ architecture behaviour of stack_filler is
 	);
 	end component and_gate_two;
 ---------------------------------------
+	component and_gate_three is
+	port (		
+        	a,b,c : in std_logic;
+        	o : out std_logic	
+	);
+	end component and_gate_three;
+---------------------------------------
 	component stack is
 	generic(
         	bitSize : integer := 8;
@@ -81,7 +88,7 @@ architecture behaviour of stack_filler is
    	);
 	end component;
 	
-signal counter1Stopped, counter1NotStopped, counter2Stopped, counter2NotStopped, orOut, andOut, stackEmpty, stackFull:std_logic;
+signal counter1Stopped, counter1NotStopped, counter2Stopped, counter2NotStopped, orOut, andOut1,andOut2,andOut3, stackEmpty, stackFull:std_logic;
 signal zeros:std_logic_vector((bitSize-1) downto 0) := (others => '0');
 signal muxOut:std_logic_vector((bitSize-1) downto 0);
 
@@ -89,8 +96,11 @@ begin
 	while_counter1 : while_counter generic map(counterSize=>counterSize) port map(clk=>clk,en=>en,rst=>rst,countUntil=>regSize,stopped=>counter1Stopped,not_stopped=>counter1NotStopped);
 	while_counter2 : while_counter generic map(counterSize=>counterSize) port map(clk=>clk,en=>counter1Stopped,rst=>rst,countUntil=>numZeros,stopped=>counter2Stopped,not_stopped=>counter2NotStopped);
 	mux1 : n_bit_mux_two_one generic map(bitSize=>bitSize) port map(a=>fifoIn,b=>zeros,s=>counter1Stopped,o=>muxOut);
-	or1 : or_gate_three port map(a=>counter1NotStopped,b=>counter2NotStopped,c=>rd,o=>orOut);
-	and1 : and_gate_two port map(a=>clk,b=>orOut,o=>andOut);
+	
+	and1 : and_gate_two port map(a=>clk,b=>rd,o=>andOut1);
+	and2 : and_gate_three port map(a=>clk,b=>counter1NotStopped,c=>en,o=>andOut2);
+	and3 : and_gate_three port map(a=>clk,b=>counter2NotStopped,c=>en,o=>andOut3);
+	or1 : or_gate_three port map(a=>andOut1,b=>andOut2,c=>andOut3,o=>orOut);
 	stack1 : stack generic map(bitSize=>bitSize,stackSize=>2*systolicArraySize-1) port map(d=>muxOut,q=>saIn,bar_push_pop=>rd,full=>stackFull,empty=>stackEmpty,clk=>orOut,rst=>rst);
 	enNxt <= counter1Stopped;
 	rdy <=	counter2Stopped and counter1Stopped;

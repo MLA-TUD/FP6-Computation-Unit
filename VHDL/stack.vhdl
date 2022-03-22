@@ -28,6 +28,7 @@ begin
         variable stack_pointer : integer range 0 to stackSize := stackSize;
     begin
         if rst = '1' then
+		memory <= (others => (others => '0'));
             	empty <= '1';
             	full  <= '0';
             	stack_pointer := stackSize;
@@ -50,6 +51,7 @@ begin
 
             	if stack_pointer = stackSize then
                		empty <= '1';
+			q <= (others => '0');
             	else
                 	empty <= '0';
             	end if;
