@@ -4,14 +4,14 @@ use ieee.numeric_std.all;
 
 
 entity counter is	
-	generic (
-        	bitSize : integer := 8
-    	);
+    generic (
+        bitSize : integer := 8                              --Maximum size of counter vector
+    );
 	port (		
-        	clk : in std_logic;
-        	rst : in std_logic;
-		en : in std_logic;
-		q : out std_logic_vector((bitSize - 1) downto 0)	
+        clk : in std_logic;                                 --Clocksignal
+        rst : in std_logic;                                 --Asynchronous reset active HIGH
+		en : in std_logic;                                  --Counter enable active HIGH
+		q : out std_logic_vector((bitSize - 1) downto 0)	--Current counter value as bitvector
 	);
 end counter;
 
@@ -25,10 +25,10 @@ begin
 		end if;
 		if rising_edge(clk) then
 			if en = '1' then
-                		tmp <= std_logic_vector(to_unsigned(to_integer(unsigned( tmp )) + 1, bitSize));
+                tmp <= std_logic_vector(to_unsigned(to_integer(unsigned( tmp )) + 1, bitSize));
 				q <= std_logic_vector(to_unsigned(to_integer(unsigned( tmp )) + 1, bitSize));
 			end if;
-            	end if;
+        end if;
 	end process;
 	
 end behavior;

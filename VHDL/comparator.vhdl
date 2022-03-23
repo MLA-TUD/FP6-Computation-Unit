@@ -4,29 +4,17 @@ use ieee.numeric_std.all;
 
 
 entity comparator is	
-    	generic (
-        	bitSize : integer := 8
-    	);
+    generic (
+        bitSize : integer := 8                              --Size of bitvectors that are compared
+    );
 	port (		
-        	a : in std_logic_vector((bitSize - 1) downto 0);	
-		b : in std_logic_vector((bitSize - 1) downto 0);	
-        	eq : out std_logic
+        a : in std_logic_vector((bitSize - 1) downto 0);	--First bitvector
+		b : in std_logic_vector((bitSize - 1) downto 0);	--First bitvector
+        eq : out std_logic                                  --Output: HIGH when  a = b
 	);
 end comparator;
 
 architecture behavior of comparator is
-signal tmp : std_logic;
 begin
-
-	eq <= '1' when a = b else '0';
-	--process(a,b) begin
-        --	tmp <= '1';
-	--	for i in 0 to (bitSize - 1) loop
-	--	    if a(i) /= b(i) then --They are different
-        --        	tmp <= '0';
-          --  		end if;
-	  --  	end loop;
-	  --  	eq <= tmp;
-	--end process;
-	
+	eq <= '1' when a = b else '0';	
 end behavior;

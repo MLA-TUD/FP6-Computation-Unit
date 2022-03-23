@@ -5,12 +5,12 @@ use IEEE.numeric_std.all;
 
 entity fifo is generic(dataSize:integer:=8;addressSize:integer:=8);
     port(
-        rdata: out std_logic_vector(dataSize-1 downto 0);
-        wfull: out std_logic;
-        rempty: out std_logic;
-        wdata: in std_logic_vector(dataSize-1 downto 0);
-        winc, wclk, wrst_n: in std_logic;
-        rinc, rclk, rrst_n: in std_logic
+        rdata: out std_logic_vector(dataSize-1 downto 0);   --Bitvector to be read
+        wfull: out std_logic;                               --Bitvector to be written
+        rempty: out std_logic;                              --Active High when FiFo empty
+        wdata: in std_logic_vector(dataSize-1 downto 0);    --Active high when FiFo fill
+        winc, wclk, wrst_n: in std_logic;                   --winc: increments pointer to writeaddress when clock goes high, wclk: clock-signal for writing operations, wrst_n: resets writepointer active LOW
+        rinc, rclk, rrst_n: in std_logic                    --rinc: increments pointer to readaddress when clock goes high, rclk: clock-signal for reading operations, rrst_n: resets readpointer active LOW
     );
 end entity fifo;
 architecture fifo_behaviour of fifo is
