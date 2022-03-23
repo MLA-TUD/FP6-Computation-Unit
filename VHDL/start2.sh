@@ -59,7 +59,7 @@ fi
 done
 
 #create testbenches
-for file in $(find . -name "*tb*")
+for file in $(find . -name "*tb.vhdl*")
 do
 unit=${file%.vhdl}
 unit=${unit##*/}
