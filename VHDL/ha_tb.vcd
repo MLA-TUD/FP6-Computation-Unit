@@ -1,0 +1,53 @@
+$date
+  Wed Mar 23 17:40:10 2022
+$end
+$version
+  GHDL v0
+$end
+$timescale
+  1 fs
+$end
+$scope module standard $end
+$upscope $end
+$scope module std_logic_1164 $end
+$upscope $end
+$scope module ha_tb $end
+$var reg 1 ! a $end
+$var reg 1 " b $end
+$var reg 1 # s $end
+$var reg 1 $ c $end
+$scope module ha_test $end
+$var reg 1 % a $end
+$var reg 1 & b $end
+$var reg 1 ' s $end
+$var reg 1 ( c $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+0!
+0"
+0#
+0$
+0%
+0&
+0'
+0(
+#1000000
+1"
+1#
+1&
+1'
+#2000000
+1!
+0"
+1%
+0&
+#3000000
+1"
+0#
+1$
+1&
+0'
+1(
+#4000000

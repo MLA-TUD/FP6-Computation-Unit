@@ -57,6 +57,19 @@ else
    # exit 1
 fi
 done
+
+#create testbenches
+for file in $(find . -name "*tb*")
+do
+unit=${file%.vhdl}
+unit=${unit##*/}
+if ghdl -r $unit --vcd=$unit.vcd; then
+  echo "created vcd file"
+else
+ echo ".vcd failed"
+fi
+done
+
 for file in "$@"
 do
 unittb=${file%.vhdl}
