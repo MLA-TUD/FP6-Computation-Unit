@@ -4,8 +4,8 @@ use ieee.std_logic_1164.all;
 
 entity mux_two_one is	
 	port (		
-        	a,b,s : in std_logic;
-        	o : out std_logic	
+        	a,b,s : in std_logic;   --a, b inputs, s: select
+        	o : out std_logic	    --output, a when s=LOW else b
 	);
 end mux_two_one;
 

@@ -4,25 +4,23 @@ use ieee.numeric_std.all;
 
 entity stack is
     generic(
-        bitSize : integer := 8;
-        stackSize : integer := 4
+        bitSize : integer := 8;                             --Number of bits of the values stored in the stack
+        stackSize : integer := 4                            --Stacksize
     );
     port(
-        d  : in  std_logic_vector(bitSize - 1 downto 0); 
-        q  : out std_logic_vector(bitSize - 1 downto 0);
-        bar_push_pop : in  std_logic; 
-        full  : out std_logic; 
-        empty : out std_logic; 
-	en 	: in std_logic;
-        clk     : in  std_logic;
-        rst     : in  std_logic
+        d  : in  std_logic_vector(bitSize - 1 downto 0);    --Data that goes in
+        q  : out std_logic_vector(bitSize - 1 downto 0);    --Always stack top
+        bar_push_pop : in  std_logic;                       --Active HIGH for pop stack top, LOW for pushing value onto the stack
+        full  : out std_logic;                              --Indicates if stack is full
+        empty : out std_logic;                              --Indicates if stack is empty
+	    en 	: in std_logic;                                 --Active HIGH, enables changes of the stack
+        clk     : in  std_logic;                            --Clock signal
+        rst     : in  std_logic                             --Asynchronous reset, active HIGH
     );
 end entity stack;
 
 architecture arch of stack is
-    
-
-    	type memory_type is array (0 to stackSize) of std_logic_vector(bitSize - 1 downto 0);
+    type memory_type is array (0 to stackSize) of std_logic_vector(bitSize - 1 downto 0);
    	signal memory : memory_type;
 begin
     main : process(clk, rst) is

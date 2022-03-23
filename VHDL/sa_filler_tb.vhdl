@@ -35,6 +35,7 @@ begin
     sa_filler1: sa_filler generic map(systolicArraySize=>8, bitSize=>8, counterSize=>8)port map(numVals=>numVals,clk=>clk,r_bar_w=>r_bar_w,rst=>rst,fifoOut=>fifoOut,rinc=>rinc,rdy=>rdy,saIn=>saIn);
     
 	process begin
+        --Setup start values and reset the whole sa-filler
 		clk <= '0';
 		r_bar_w <= '0';
 		rst <= '1';
@@ -42,14 +43,14 @@ begin
 		fifoOut <= "00000000";
 		wait for 10 ns;
 		rst <= '0';
-		fifoOut <= "00000001";
+		fifoOut <= "00000001";                                  -- fill in 1
 		wait for 10 ns;
 		clk <= '1';wait for 10 ns;clk <= '0';wait for 10 ns;
-		fifoOut <= "00000010";
+		fifoOut <= "00000010";                                  -- fill in 2
 		clk <= '1';wait for 10 ns;clk <= '0';wait for 10 ns;
-		fifoOut <= "00000011";
+		fifoOut <= "00000011";                                  -- fill in 3
 		clk <= '1';wait for 10 ns;clk <= '0';wait for 10 ns;
-		fifoOut <= "00000100";
+		fifoOut <= "00000100";                                  -- fill in 4
 		clk <= '1';wait for 10 ns;clk <= '0';wait for 10 ns;
 		clk <= '1';wait for 10 ns;clk <= '0';wait for 10 ns;
 		clk <= '1';wait for 10 ns;clk <= '0';wait for 10 ns;
@@ -62,7 +63,9 @@ begin
 		clk <= '1';wait for 10 ns;clk <= '0';wait for 10 ns;
 		clk <= '1';wait for 10 ns;clk <= '0';wait for 10 ns;
 		
-
+        -- final result should be :  0 1 2 -> 1st row sa
+        --                           3 4 0 -> 2nd row sa
+        --                           0 0 0 ... rest are zeros
 		wait;		
 			
 	end process;

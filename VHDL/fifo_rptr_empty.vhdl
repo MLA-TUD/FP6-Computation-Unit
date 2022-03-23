@@ -4,7 +4,7 @@ use IEEE.numeric_std.all;
 
 entity fifo_rptr_empty is generic(addressSize:integer:=8);
     port(
-        rempty: out std_logic;
+        rempty: out std_logic;                                  --Active HIGH when readpointer is equal to writepointer (see paper)
         raddr: out std_logic_vector(addressSize-1 downto 0);
         rptr: out std_logic_vector(addressSize downto 0);
         rq2_wptr: in std_logic_vector(addressSize downto 0);

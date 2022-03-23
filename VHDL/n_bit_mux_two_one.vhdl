@@ -4,12 +4,12 @@ use ieee.std_logic_1164.all;
 
 entity n_bit_mux_two_one is
 	generic (
-		bitSize : integer := 8	
+		    bitSize : integer := 8	                            --No. of bits of vector
 	);	
 	port (		
-        	a,b : in std_logic_vector(bitSize-1 downto 0);
-		s : in std_logic;
-        	o : out std_logic_vector(bitSize-1 downto 0)	
+        	a,b : in std_logic_vector(bitSize-1 downto 0);      --Input bitvectors
+		    s : in std_logic;                                   --Select bit
+        	o : out std_logic_vector(bitSize-1 downto 0)	    --Output: a when s=LOW, else b
 	);
 end n_bit_mux_two_one;
 

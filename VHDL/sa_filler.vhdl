@@ -5,22 +5,22 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.math_real.all;
 use IEEE.NUMERIC_STD.ALL;
-
+--prepares the serial coming data for systolic array to perform a matrix multiplication
 entity sa_filler is
 	generic (
-		systolicArraySize : integer := 8;
-		bitSize : integer := 8;
-		counterSize : integer := 24
+		systolicArraySize : integer := 8;                           --Maximum size of systolic array
+		bitSize : integer := 8;                                     --Bitvectorsize of values from FiFo
+		counterSize : integer := 24                                 --Size of counter for comparision 
 	);
 	port (
-		numVals : in std_logic_vector ((counterSize-1) downto 0);
-		clk : in std_logic;
-		r_bar_w : in std_logic;
-		rst : in std_logic;
-		fifoOut : in std_logic_vector((bitSize-1) downto 0);
-		rinc : out std_logic;
-		rdy : out std_logic;
-		saIn : out std_1d_vector_array(0 to systolicArraySize-1)
+		numVals : in std_logic_vector ((counterSize-1) downto 0);   --Size of matrix to be multiplied (can be smaller than maximum systolic array size)
+		clk : in std_logic;                                         --Clock
+		r_bar_w : in std_logic;                                     --Active HIGH read and active LOW write (write to stacks and read out values from the stacks)
+		rst : in std_logic;                                         --Active HIGH reset, resets all counters and stacks
+		fifoOut : in std_logic_vector((bitSize-1) downto 0);        --Inputvector from FiFo
+		rinc : out std_logic;                                       --Indicates that the next value can be read
+		rdy : out std_logic;                                        --Active HIGH when last row is fully filled
+		saIn : out std_1d_vector_array(0 to systolicArraySize-1)    --Outputvector to systolic array
 	);
 end sa_filler;
 

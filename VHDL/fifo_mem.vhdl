@@ -5,13 +5,13 @@ use IEEE.numeric_std.all;
 
 entity fifo_mem is generic(dataSize:integer:=8;addressSize:integer:=8);
     port(
-        rdata: out std_logic_vector(dataSize-1 downto 0);
-        wdata: in std_logic_vector(dataSize-1 downto 0);
-        raddr: in std_logic_vector(addressSize-1 downto 0);
-        waddr: in std_logic_vector(addressSize-1 downto 0);
-        wclken: in std_logic;
-        wfull: in std_logic;
-        wclk: in std_logic
+        rdata: out std_logic_vector(dataSize-1 downto 0);       --Bitvector input
+        wdata: in std_logic_vector(dataSize-1 downto 0);        --Bitvector output
+        raddr: in std_logic_vector(addressSize-1 downto 0);     --Internal address of readpointer
+        waddr: in std_logic_vector(addressSize-1 downto 0);     --Internal address of writepointer
+        wclken: in std_logic;                                   --Enables writing on clockpulse
+        wfull: in std_logic;                                    --Active HIGH when memory is full
+        wclk: in std_logic                                      --clock pulse for writing into memory
     );
 end entity fifo_mem;
 architecture fifo_mem_behaviour of fifo_mem is
