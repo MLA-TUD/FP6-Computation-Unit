@@ -7,6 +7,7 @@ Anleitung zum Ausführen beziehungsweise Testen des Codes:
 2. Das script `start2` 2x ausführen (damit alle Abhängigkeiten richtig kompiliert werden).
 3. Nun `start2` mit der Testbench (.vdhl Datei) die zu testen ist ausführen, GTKWave öffnet sich automatisch.
 4. Getestet unter Ubuntu 20.04
+5. Das script erstellt automatisch ´.vcd´ Dateien für alle Testbenches, dadurch läuft es aber ein bisschen länger.
 
 Einige .vcd Dateien sind der einfachheit halber schon im Repo enthalten und können mit GTKWave ausgeführt werden.
 
