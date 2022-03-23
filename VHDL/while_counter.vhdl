@@ -3,18 +3,18 @@ use work.array_vector_package.all;
 
 library ieee;
 use ieee.std_logic_1164.all;
-
+--counts to n and indicates if the end of the loop has been reached or not
 entity while_counter is
 	generic(
-		counterSize:integer := 24
+		counterSize:integer := 24                                       --Counter size in bits
 	);
 	port(
-		clk : in std_logic;
-		en : in std_logic;
-		rst : in std_logic;
-		countUntil : in std_logic_vector((counterSize-1) downto 0);
-		stopped : out std_logic;
-		not_stopped : out std_logic
+		clk : in std_logic;                                             --Clock signal
+		en : in std_logic;                                              --Enables the counter, active HIGH
+		rst : in std_logic;                                             --Asynchronous reset of the counter(sets it to zero)
+		countUntil : in std_logic_vector((counterSize-1) downto 0);     --Number of loops
+		stopped : out std_logic;                                        --Indicates if end of the loop has been reached
+		not_stopped : out std_logic                                     --Inverted stopped
 	);
 end while_counter;
 

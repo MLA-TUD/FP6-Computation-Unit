@@ -6,21 +6,21 @@ use ieee.std_logic_1164.all;
 
 entity stack_filler is
 	generic(
-		bitSize:integer := 8;
-		counterSize:integer := 24;
-		stackSize:integer :=8
+		bitSize:integer := 8;                                           --Vector size in bits
+		counterSize:integer := 24;                                      --Size of counter in bits for comparison
+		stackSize:integer :=8                                           --Stack size in bits
 	);
 	port(
-		valIn : in std_logic_vector((bitSize-1) downto 0);
-		clk : in std_logic;
-		rst : in std_logic;
-		en : in std_logic;
-		rd : in std_logic;
-		numVals : in std_logic_vector((counterSize-1) downto 0);
-		numZeros : in std_logic_vector((counterSize-1) downto 0);
-		enNxt : out std_logic;
-		valOut : out std_logic_vector((bitSize-1) downto 0);
-		rdy : out std_logic
+		valIn : in std_logic_vector((bitSize-1) downto 0);              --Value that should be stored in the stack
+		clk : in std_logic;                                             --Clock signal
+		rst : in std_logic;                                             --Asynchronous reset
+		en : in std_logic;                                              --Enables changes when clk is HIGH, active HIGH
+		rd : in std_logic;                                              --Active HIGH, pops out stack top
+		numVals : in std_logic_vector((counterSize-1) downto 0);        --Number of values before the zeros start
+		numZeros : in std_logic_vector((counterSize-1) downto 0);       --Number of zeros after the values
+		enNxt : out std_logic;                                          --Enables the next stack filler. This one just needs the zeros
+		valOut : out std_logic_vector((bitSize-1) downto 0);            --Value from stack to systolic array
+		rdy : out std_logic                                             --Last zero (or value when numZeros=0) has been written, active HIGH
 	);
 end stack_filler;
 
