@@ -14,15 +14,15 @@ architecture test of sa_tb is
         bitSize:integer := 8                                                        -- fixed to 8 for this project
     );    
 	port (
-		upperInputVectors : in std_1d_vector_array(0 to array_size-1);              -- input 1: (top)	1-dimensional array of: 8-bit signed (2k) data
-        leftInputVectors : in std_1d_vector_array(0 to array_size-1);               -- input 2: (left)	1-dimensional array of: 8-bit signed (2k) data
+		upperInputVectors : in std_1d_vector_array(0 to systolicArraySize-1);              -- input 1: (top)	1-dimensional array of: 8-bit signed (2k) data
+        leftInputVectors : in std_1d_vector_array(0 to systolicArraySize-1);               -- input 2: (left)	1-dimensional array of: 8-bit signed (2k) data
         clk : in std_logic;                                                         -- clock
         reset : in std_logic;                                                       -- reset (each cell (-> d) to "00000000")
-        outMatrix : out std_2d_vector_array(0 to array_size-1, 0 to array_size-1)   -- output: (back)	2-dimensional array of: 8-bit signed (2k) data
+        outMatrix : out std_2d_vector_array(0 to systolicArraySize-1, 0 to systolicArraySize-1)   -- output: (back)	2-dimensional array of: 8-bit signed (2k) data
 	);
     end component sa;
 
-    --constant array_size : integer := 8;
+    constant array_size : integer := 8;		-- you can change the size of the sa here --
     
 	signal a, b: std_1d_vector_array(0 to array_size-1)  ;
 
